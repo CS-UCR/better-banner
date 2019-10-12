@@ -8,12 +8,17 @@
     "scripts": {
         "client": "cd client && npm start",
         "server": "cd server && npm start",
-        "start": "concurrently - kill-others \"npm run server\" \"npm run client\""
+        "start": "concurrently -- kill-others \"npm run server --scripts-prepend-node-path\" \"npm run client --scripts-prepend-node-path\""
     },
     "dependencies": {},
     "devDependencies": {
         "concurrently": "^4.1.1",
-        "eslint": "^6.1.0",
-        "eslint-config-prettier": "^6.0.0"
+        "eslint": "5.16.0",
+        "eslint-config-airbnb": "^18.0.1",
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-jsx-a11y": "^6.2.3",
+        "eslint-plugin-react": "^7.16.0",
+        "eslint-plugin-react-hooks": "^2.1.2"
     }
 }

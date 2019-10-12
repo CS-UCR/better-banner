@@ -17,9 +17,6 @@
         "eject": "react-scripts eject",
         "storybook": "start-storybook --port 3003"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
     "browserslist": {
         "production": [
             ">0.2%",
