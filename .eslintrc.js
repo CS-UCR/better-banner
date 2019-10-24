@@ -21,7 +21,6 @@ module.exports = {
         'func-names': 'off'
     },
     env: {
-        mongo: true,
         node: true,
         browser: true,
         mocha: true

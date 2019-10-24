@@ -8,8 +8,10 @@
         "@material-ui/icons": "^4.5.1",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
+        "react-d3-tree": "^1.15.3",
         "react-dom": "^16.8.6",
-        "react-scripts": "3.0.1"
+        "react-scripts": "3.0.1",
+        "react-trello": "^2.2.3"
     },
     "scripts": {
         "start": "react-scripts start",
