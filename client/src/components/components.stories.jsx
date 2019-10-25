@@ -2,6 +2,7 @@ import React from 'react';
 import { List } from '@material-ui/core';
 import RequirementListItem from './RequirementListItem';
 import KanbanBoard from './KanbanBoard';
+import Tree from './Tree';
 
 export const Requirements = () => {
     const data = [
@@ -67,6 +68,37 @@ export const Board = () => {
         ]
     };
     return <KanbanBoard data={data} />;
+};
+
+export const D3Tree = () => {
+    const myTreeData = [
+        {
+            name: 'Top Level',
+            attributes: {
+                keyA: 'val A',
+                keyB: 'val B',
+                keyC: 'val C'
+            },
+            children: [
+                {
+                    name: 'Level 2: A',
+                    attributes: {
+                        keyA: 'val A',
+                        keyB: 'val B',
+                        keyC: 'val C'
+                    }
+                },
+                {
+                    name: 'Level 2: B'
+                }
+            ]
+        }
+    ];
+    return (
+        <div id='treeWrapper' style={{ width: '100vw', height: '100vh' }}>
+            <Tree data={myTreeData} />
+        </div>
+    );
 };
 
 export default {
