@@ -1,5 +1,5 @@
 // import { Pool } from 'pg';
-import db from './index';
+// import db from './index';
 
 // const getUsers = (request)
 
@@ -66,10 +66,10 @@ import db from './index';
 //     });
 // };
 
-module.exports = {
-    getUsers,
-    getUserById,
-    createUser,
-    updateUser,
-    deleteUser
-};
+// module.exports = {
+//     getUsers,
+//     getUserById,
+//     createUser,
+//     updateUser,
+//     deleteUser
+// };
