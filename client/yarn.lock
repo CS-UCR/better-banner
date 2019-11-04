@@ -3481,7 +3481,7 @@ clone@^2.1.1:
   resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
-clsx@^1.0.2:
+clsx@^1.0.2, clsx@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.0.4.tgz#0c0171f6d5cb2fe83848463c15fcc26b4df8c2ec"
   integrity sha512-1mQ557MIZTrL/140j+JVdRM6e31/OA4vTYxXgqIIZlndyfjHpyawKZia1Im05Vp9BWmImkcNrNtFYQMyFcgJDg==
@@ -8192,6 +8192,16 @@ normalize-url@^3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
   integrity sha512-U+JJi7duF1o+u2pynbp2zXDW2/PADgC30f0GsHZtRh+HOcXHnw137TrNlyxxRvWW5fjKd3bcLHPxofWuCjaeZg==
 
+notistack@^0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/notistack/-/notistack-0.9.5.tgz#3294e8438055ea5a39a8a4428240b05c548bb5b2"
+  integrity sha512-nemhQYIofQXoRTZ58TMaTfvsKIJLZygP0CI4XXgwSDEgXfQ414H/oHj+PtEiJbQQxJiWEm8hPey1bmw7brxL2g==
+  dependencies:
+    classnames "^2.2.6"
+    hoist-non-react-statics "^3.3.0"
+    prop-types "^15.7.2"
+    react-is "^16.8.6"
+
 npm-bundled@^1.0.1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
@@ -9821,7 +9831,7 @@ react-app-polyfill@^1.0.4:
     regenerator-runtime "0.13.3"
     whatwg-fetch "3.0.0"
 
-"react-click-outside@github:tj/react-click-outside":
+react-click-outside@tj/react-click-outside:
   version "1.1.1"
   resolved "https://codeload.github.com/tj/react-click-outside/tar.gz/a833ddc5be47490307f9fcc6ed09d8c353108510"
 
@@ -10968,9 +10978,9 @@ slice-ansi@^2.1.0:
     astral-regex "^1.0.0"
     is-fullwidth-code-point "^2.0.0"
 
-"smooth-dnd@git+https://github.com/rcdexta/smooth-dnd.git":
+"smooth-dnd@https://github.com/rcdexta/smooth-dnd":
   version "0.6.3"
-  resolved "git+https://github.com/rcdexta/smooth-dnd.git#f13924c67bf6ffe4613d97bb1ee83f11d364eb1e"
+  resolved "https://github.com/rcdexta/smooth-dnd#f13924c67bf6ffe4613d97bb1ee83f11d364eb1e"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

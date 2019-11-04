@@ -3,6 +3,7 @@ import { List } from '@material-ui/core';
 import RequirementListItem from './RequirementListItem';
 import KanbanBoard from './KanbanBoard';
 import Tree from './Tree';
+import SnackBar from './simpleSnackbars';
 
 export const Requirements = () => {
     const data = [
@@ -100,6 +101,10 @@ export const D3Tree = () => {
         </div>
     );
 };
+
+export const snackBar1 = () => {
+    return <SnackBar />;
+}
 
 export default {
     title: 'Components'

@@ -6,6 +6,8 @@
     "dependencies": {
         "@material-ui/core": "^4.2.1",
         "@material-ui/icons": "^4.5.1",
+        "clsx": "^1.0.4",
+        "notistack": "^0.9.5",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-d3-tree": "^1.15.3",
