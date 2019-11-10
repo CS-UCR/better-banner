@@ -3,8 +3,11 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "nodemon --exec babel-node bin/www",
-        "dev": "NODE_ENV=development npm-run-all start && echo 'hello world'"
+        "dev": "nodemon --exec babel-node bin/www",
+        "start": "NODE_ENV=development npm-run-all db && dev",
+        "startdb": "./db/startdb.sh /tmp/better-banner",
+        "resetdb": "./db/resetdb.sh /tmp/better-banner",
+        "stopdb": "./db/stopdb.sh /tmp/better-banner"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",

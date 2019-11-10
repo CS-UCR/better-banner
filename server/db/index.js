@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import Knex from 'knex';
 
 // TODO: make this connection dynamic depending on if dev or production
