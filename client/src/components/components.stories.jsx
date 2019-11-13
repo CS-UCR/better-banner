@@ -4,6 +4,7 @@ import RequirementListItem from './RequirementListItem';
 import KanbanBoard from './KanbanBoard';
 import Tree from './Tree';
 import SnackBar from './simpleSnackbars';
+import Drawer from './Drawer';
 
 export const Requirements = () => {
     const data = [
@@ -65,7 +66,22 @@ export const Board = () => {
                 title: 'Completed',
                 label: '0/0',
                 cards: []
+            },
+            {
+                id: 'lane3',
+                title: 'WishList',
+                label: '2/2',
+                cards: [
+                    {
+                        id: 'CourseID1', title: 'CS179G', description: 'Senior Design Database', label: 'CompSci' 
+                    },
+                    {
+                        id: 'CourseID2', title: 'CS161', description: 'Advanced Computer Architecture', label: 'CompSci' 
+                    }
+                ]
+
             }
+
         ]
     };
     return <KanbanBoard data={data} />;
@@ -91,6 +107,14 @@ export const D3Tree = () => {
                 },
                 {
                     name: 'Level 2: B'
+                },
+                {
+                    name: 'Level 3: C',
+                    attributes: {
+                        Professor: 'Jeffy McDaniel',
+                        Room: 'Wch 136',
+                        Bitch: 'True'
+                    }
                 }
             ]
         }
@@ -104,6 +128,10 @@ export const D3Tree = () => {
 
 export const snackBar1 = () => {
     return <SnackBar />;
+}
+
+export const courseDetails = () => {
+    return <Drawer />;
 }
 
 export default {
