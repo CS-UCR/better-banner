@@ -3,8 +3,9 @@ import { List } from '@material-ui/core';
 import RequirementListItem from './RequirementListItem';
 import KanbanBoard from './KanbanBoard';
 import Tree from './Tree';
-import SnackBar from './simpleSnackbars';
+import SnackBar from './SimpleSnackbars';
 import Drawer from './Drawer';
+import Card from './Card';
 
 export const Requirements = () => {
     const data = [
@@ -126,12 +127,16 @@ export const D3Tree = () => {
     );
 };
 
-export const snackBar1 = () => {
+export const SnackBar1 = () => {
     return <SnackBar />;
 }
 
-export const courseDetails = () => {
+export const CourseDrawer = () => {
     return <Drawer />;
+}
+
+export const CourseCard = () => {
+    return <Card />;
 }
 
 export default {
