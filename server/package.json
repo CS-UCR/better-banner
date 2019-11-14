@@ -4,14 +4,16 @@
     "private": true,
     "scripts": {
         "dev": "nodemon --exec babel-node bin/www",
-        "start": "NODE_ENV=development npm-run-all db && dev",
+        "start": "NODE_ENV=development npm-run-all startdb && dev",
         "startdb": "./db/startdb.sh /tmp/better-banner",
         "resetdb": "./db/resetdb.sh /tmp/better-banner",
-        "stopdb": "./db/stopdb.sh /tmp/better-banner"
+        "stopdb": "./db/stopdb.sh /tmp/better-banner",
+        "knex": "babel-node node_modules/knex/bin/cli.js"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
+        "dotenv": "^8.2.0",
         "express": "~4.16.1",
         "http-errors": "~1.6.3",
         "knex": "^0.20.1",
@@ -24,6 +26,7 @@
         "@babel/cli": "^7.6.4",
         "@babel/core": "^7.6.4",
         "@babel/node": "^7.6.3",
-        "@babel/preset-env": "^7.6.3"
+        "@babel/preset-env": "^7.6.3",
+        "faker": "^4.1.0"
     }
 }
