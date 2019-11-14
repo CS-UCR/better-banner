@@ -15,7 +15,7 @@ export default function useFetch(url) {
             })
             // eslint-disable-next-line
             .catch(e => console.log(e));
-    }, []);
+    }, [url]);
 
     return [loading, data];
 }

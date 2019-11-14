@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Grow, Container } from '@material-ui/core';
+import { List, Slide, Container } from '@material-ui/core';
 import RequirementListItem from '../components/RequirementListItem';
 import Loader from '../components/Loader';
 import useFetch from '../hooks/useFetch';
@@ -9,10 +9,38 @@ import Title from '../components/Title';
  * An arrow function returns whatever follows if there are no brackets
  * i.e.  () => <statement>; is equivalent to function () { return <statement>; }
  */
-const calcTimeout = index => (index + 1) * 100;
+const calcTimeout = index => (index + 1) * 200;
 
 export default function Audit() {
-    const [loading, data] = useFetch('user/1/audit');
+    // const [loading, data] = useFetch('user/1/audit');
+    const loading = false;
+    const data = [
+        {
+            complete: 5,
+            total: 12,
+            label: 'Degree in Bachelor of Science'
+        },
+        {
+            complete: 0,
+            total: 1,
+            label: 'Bourns College of Engineering Grad Application'
+        },
+        {
+            complete: 3,
+            total: 15,
+            label: 'Breadth for Bourns College of Engineering '
+        },
+        {
+            complete: 3,
+            total: 10,
+            label: 'DEPTH for Bourns College of Engineering'
+        },
+        {
+            complete: 5,
+            total: 20,
+            label: 'Lower Division Computer Science Requirements'
+        }
+    ];
     return loading ? (
         <Loader />
     ) : (
@@ -20,14 +48,19 @@ export default function Audit() {
             <Title>Audit</Title>
             <List>
                 {data.map(({ complete, total, label }, index) => (
-                    <Grow in timeout={calcTimeout(index)}>
+                    <Slide
+                        direction={index % 2 ? 'left' : 'right'}
+                        key={index}
+                        in
+                        timeout={calcTimeout(index)}
+                    >
                         <RequirementListItem
                             complete={complete}
                             total={total}
                             onClick={() => console.log('TODO')}
                             label={label}
                         />
-                    </Grow>
+                    </Slide>
                 ))}
             </List>
         </Container>

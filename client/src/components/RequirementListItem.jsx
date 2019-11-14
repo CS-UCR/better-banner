@@ -23,15 +23,15 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function RequirementMenuItem({
+const RequirementMenuItem = React.forwardRef( ({
     total,
     complete,
     onClick,
     label
-}) {
+}, ref) => {
     const classes = useStyles();
     return (
-        <ListItem divider button onClick={onClick}>
+        <ListItem ref={ref} divider button onClick={onClick}>
             <ListItemText>{label}</ListItemText>
             <div className={classes.circle}>
                 <Typography>{`${complete}/${total} Complete`}</Typography>
@@ -41,7 +41,7 @@ export default function RequirementMenuItem({
             </Icon>
         </ListItem>
     );
-}
+});
 
 RequirementMenuItem.propTypes = {
     total: PropTypes.number.isRequired,
@@ -49,3 +49,5 @@ RequirementMenuItem.propTypes = {
     onClick: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired
 };
+
+export default RequirementMenuItem;
