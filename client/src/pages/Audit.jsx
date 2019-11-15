@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Slide, Container } from '@material-ui/core';
+import { List, Slide, Container, Button } from '@material-ui/core';
 import RequirementListItem from '../components/RequirementListItem';
 import Loader from '../components/Loader';
 import useFetch from '../hooks/useFetch';
@@ -42,7 +42,9 @@ export default function Audit() {
         }
     ];
     return loading ? (
-        <Loader />
+        <div>
+            <Loader />
+        </div>
     ) : (
         <Container maxWidth='md'>
             <Title>Audit</Title>
