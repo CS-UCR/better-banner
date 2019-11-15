@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function RecipeReviewCard() {
+export default function CourseCard(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
@@ -53,12 +53,13 @@ export default function RecipeReviewCard() {
                         <MoreVertIcon />
                     </IconButton>
                 )}
-                title='CS 161'
-                subheader='M W F 12:30 - 3:30'
+                title={props.courseNumber}
+                subheader={props.schedule}
             />
             <CardContent>
                 <Typography variant='body2' color='textSecondary' component='p'>
-          DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)
+                    {props.courseHead}
+                    {/* DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units) */}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
