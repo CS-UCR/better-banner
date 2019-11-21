@@ -6,6 +6,8 @@ import Tree from './Tree';
 import SnackBar from './SimpleSnackbars';
 import Drawer from './Drawer';
 import Card from './Card';
+import Flow from './Flow';
+
 
 export const Requirements = () => {
     const data = [
@@ -136,7 +138,22 @@ export const CourseDrawer = () => {
 }
 
 export const CourseCard = () => {
-    return <Card />;
+    return(
+        <div>
+            <Card />
+        </div>
+    );
+    
+}
+
+export const UIFlow = () =>{
+    return(
+        <div>
+            <Flow />
+            <Card />
+
+        </div>
+    );
 }
 
 export default {
