@@ -26,9 +26,12 @@ const values = [
 //     return values[];
 // }
 
-function SettingChild({ onClick }) {
-    const setData = () =>
-        onClick(values[Math.trunc(Math.random() * values.length)]);
+function SettingChild({ handleData }) {
+    function setData() {
+        const chosenValue = values[Math.trunc(Math.random() * values.length)];
+        handleData(chosenValue);
+    }
+
     return (
         <Button onClick={setData} variant='contained'>
             Click me!
@@ -52,9 +55,12 @@ function ReceivingChild({ data }) {
 
 export default function Parent() {
     const [state, setState] = React.useState([]);
+    function handleData(chosenValue) {
+        setState([...state, chosenValue]);
+    }
     return (
         <div>
-            <SettingChild onClick={item => setState([...state, item])} />
+            <SettingChild handleData={handleData} />
             <ReceivingChild data={state} />
         </div>
     );
