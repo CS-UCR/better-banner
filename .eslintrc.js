@@ -30,10 +30,10 @@ module.exports = {
             node: {
                 paths: ['.']
             },
-            alias: {
-                map: [['/src', './src']],
-                extensions: ['.ts', '.js', '.jsx', '.json']
-            }
+            // alias: {
+            //     map: [['/src', './src']],
+            //     extensions: ['.ts', '.js', '.jsx', '.json']
+            // }
         }
     }
 };
