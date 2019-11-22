@@ -1,16 +1,9 @@
 import React from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Typography,
-    Button,
-    Container,
-    Grid,
-    GridList,
-    GridListTile
-} from '@material-ui/core';
+import { AppBar,Toolbar,Typography,Button,Grid} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Card from '../components/Card';
+// import Card from '../components/Card';
+import ClassDetails from '../components/ClassDetails';
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -30,44 +23,84 @@ const useStyles = makeStyles(theme => ({
 // used as the index to map each entry
 const courses = [
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 179G',
-        schedule: 'M W F, 12:30',
-        courseHead: 'SENIOR DESIGN (4 units)'
+        courseTitle: 'CS179G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Database Senior Design',
+        Prerequisites: 'CS166 with a grade of C- or better',
+        Location: 'WCH 145',
+        Instructor: 'Mariam Salloum',
+        Seats_Available: 'Seats available: 0',
+        Waitlist: 'Waitlist: 2',
     },
     {
-        courseNumber: 'CS 150',
-        schedule: 'M W F, 12:30',
-        courseHead: 'THEORY OF AUTOMATA (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
     {
-        courseNumber: 'CS 161',
-        schedule: 'M W F, 12:30',
-        courseHead: 'DESIGN AND ARCHITECTURE OF COMPUTER SYSTEMS (4 units)'
+        courseTitle: 'CS150G',
+        Schedule: 'Monday 11:00 - 11:50',
+        Overview: 'Theory of Automata',
+        Prerequisites: 'CS111 with a grade of C- or better',
+        Location: 'WCH 138',
+        Instructor: 'Pae Lependu',
+        Seats_Available: 'Seats available: 5',
+        Waitlist: 'Waitlist: 0',
     },
 ];
 
@@ -107,20 +140,27 @@ export default function Sandbox() {
                     </Grid>
                 </Grid>
             </Container> */}
-            <h1>Hi there</h1>
-            <p>June Bug</p>
-            <p> Whats cooking</p>
-            <GridList cols={4}>
+            <Grid container spacing={4}>
                 {courses.map((x, index) => (
-                    <GridListTile key={index}>
-                        <Card
+                    <Grid item key={index} className={classes.cardGrid} xs={3}>
+                        {/* <Card
                             courseNumber={x.courseNumber}
                             schedule={x.schedule}
                             courseHead={x.courseHead}
+                        /> */}
+                        <ClassDetails 
+                            courseTitle={x.courseTitle}
+                            Schedule={x.Schedule}
+                            Overview={x.Overview}
+                            Prerequisites={x.Prerequisites}
+                            Location={x.Location}
+                            Instructor={x.Instructor}
+                            Seats_Available={x.Seats_Available}
+                            Waitlist={x.Waitlist}
                         />
-                    </GridListTile>
+                    </Grid>
                 ))}
-            </GridList>
+            </Grid>
         </>
     );
 }
