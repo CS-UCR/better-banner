@@ -3,7 +3,8 @@ import { AppBar,Toolbar,Typography,Button,Grid} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
-
+import FullScreen from '../components/FullScreenDialog';
+import FullScreenDialog from '../components/FullScreenDialog';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -104,9 +105,29 @@ const courses = [
     },
 ];
 
+
+
 export default function Sandbox() {
     const classes = useStyles();
 
+    const [ScheduleDialog, ToggleDialog] = React.useState(false);
+    const [DialogData, SetData] = React.useState(null);
+
+
+
+    function handleData (data){
+        ToggleDialog(true);
+        SetData(data);
+    }
+
+    function closeDialog(){
+        ToggleDialog(false);
+        SetData(null);
+    }
+
+
+
+    // return is like the render() you find in class 
     return (
         <>
             <AppBar position='relative'>
@@ -124,43 +145,20 @@ export default function Sandbox() {
                     </Button>
                 </Toolbar>
             </AppBar>
-            {/* <Container className={classes.cardGrid} maxWidth='md'>
-                <Grid container spacing={2}>
-                    <Grid item sm={12}>
-                        <Card />
-                    </Grid>
-                    <Grid item sm={12}>
-                        <Card />
-                    </Grid>
-                    <Grid item sm={12}>
-                        <Card />
-                    </Grid>
-                    <Grid item sm={12}>
-                        <Card />
-                    </Grid>
-                </Grid>
-            </Container> */}
             <Grid container spacing={4}>
                 {courses.map((x, index) => (
                     <Grid item key={index} className={classes.cardGrid} xs={3}>
-                        {/* <Card
-                            courseNumber={x.courseNumber}
-                            schedule={x.schedule}
-                            courseHead={x.courseHead}
-                        /> */}
+
                         <ClassDetails 
-                            courseTitle={x.courseTitle}
-                            Schedule={x.Schedule}
-                            Overview={x.Overview}
-                            Prerequisites={x.Prerequisites}
-                            Location={x.Location}
-                            Instructor={x.Instructor}
-                            Seats_Available={x.Seats_Available}
-                            Waitlist={x.Waitlist}
+                            details={x}
+                            OpenDialog={handleData}
+                            CloseDialog={closeDialog}
                         />
                     </Grid>
                 ))}
             </Grid>
+            <FullScreenDialog open={ScheduleDialog} close={closeDialog} data={DialogData} />
+
         </>
     );
 }

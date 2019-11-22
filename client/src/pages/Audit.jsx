@@ -1,8 +1,8 @@
 import React from 'react';
-import { List, Slide, Container, Button } from '@material-ui/core';
+import { List, Slide, Container } from '@material-ui/core';
 import RequirementListItem from '../components/RequirementListItem';
 import Loader from '../components/Loader';
-import useFetch from '../hooks/useFetch';
+// import useFetch from '../hooks/useFetch';
 import Title from '../components/Title';
 
 /**

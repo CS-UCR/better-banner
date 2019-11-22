@@ -1,4 +1,6 @@
-//sample code, edit to change components and play around
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
+// sample code, edit to change components and play around
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,8 +11,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
@@ -38,6 +38,11 @@ export default function NestedList(props) {
         ClassSeats: false,
 
     });
+    //grabbing Schedule Dialog props
+    const {OpenDialog, CloseDialog, details} = props;
+
+    
+
 
     const handleClick = (key) => {
         setOpen({ ...open, [key]: !(open[key])});
@@ -51,7 +56,7 @@ export default function NestedList(props) {
                 subheader={(
                     <ListSubheader component='div' id='nested-list-subheader'>
                         {/* CS179G */}
-                        {props.courseTitle}
+                        {details.courseTitle}
                     </ListSubheader>
                 )}
                 className={classes.root}
@@ -77,12 +82,12 @@ export default function NestedList(props) {
                 </ListItem>
                 <Collapse in={open.Schedule} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button onClick={()=>OpenDialog(details)} className={classes.nested}>
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Monday, 11:00 - 11:50' /> */}
-                            <ListItemText primary={props.Schedule} />
+                            <ListItemText primary={details.Schedule} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -101,7 +106,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Senior design class of database' /> */}
-                            <ListItemText primary={props.Overview} />
+                            <ListItemText primary={details.Overview} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -120,7 +125,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='CS166 with a grade of C- or better' /> */}
-                            <ListItemText primary={props.Prerequisites} />
+                            <ListItemText primary={details.Prerequisites} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -139,7 +144,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Chung 138' /> */}
-                            <ListItemText primary={props.Location} />
+                            <ListItemText primary={details.Location} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -158,7 +163,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Marriam Salloum' /> */}
-                            <ListItemText primary={props.Instructor} />
+                            <ListItemText primary={details.Instructor} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -177,7 +182,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Seats available: 5' /> */}
-                            <ListItemText primary={props.Seats_Available} />
+                            <ListItemText primary={details.Seats_Available} />
                         </ListItem>
                     </List>
                 </Collapse>
@@ -188,7 +193,7 @@ export default function NestedList(props) {
                                 <StarBorder />
                             </ListItemIcon>
                             {/* <ListItemText primary='Waitlist: 0' /> */}
-                            <ListItemText primary={props.Waitlist} />
+                            <ListItemText primary={details.Waitlist} />
                         </ListItem>
                     </List>
                 </Collapse>
