@@ -7,7 +7,6 @@ import datefns from 'date-fns';
  */
 function getOverlappingClasses(classesToCheck = []) {
     const overlappingClasses = [];
-
     for (let i = 0; i < classesToCheck.length; i += 1) {
         if (i < classesToCheck.length - 1) {
             for (let j = i + 1; j < classesToCheck.length; j += 1) {
