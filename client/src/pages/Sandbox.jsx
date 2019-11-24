@@ -1,10 +1,12 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, FormLabel, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
 import FullScreenDialog from '../components/FullScreenDialog';
 import Drawer from '../components/DrawerAndHeader';
+import UnitSlider from '../components/UnitSlider';
+import FilterOption from '../components/FilterOption';
 
 // used as the index to map each entry
 const courses = [
@@ -141,23 +143,24 @@ export default function Sandbox() {
     // return is like the render() you find in class 
     return (
         <>
-            {/* <AppBar position='relative'>
-                <Toolbar>
-                    <Typography
-                        variant='h6'
-                        align='center'
-                        color='inherit'
-                        className={classes.title}
-                    >
-                        Registration Sandbox
-                    </Typography>
-                    <Button color='inherit' className={classes.menuButton}>
-                        Add
-                    </Button>
-                </Toolbar>
-            </AppBar> */}
             <Drawer title='Registration Sandbox' />
-            <Grid container spacing={4}>
+            <Grid container justify='center' spacing={4}>
+                <Grid item>
+                    <UnitSlider />
+                </Grid>
+                <Grid item>
+                    <FilterOption />
+                </Grid>
+                <Grid item>
+                    <FilterOption />
+                </Grid>
+                <Grid item>
+                    <FilterOption />
+                </Grid>
+            </Grid>
+
+            <FormLabel>Results</FormLabel>
+            <Grid container spacing={6}>
                 {courses.map((x, index) => (
                     <Grid item key={index} className={classes.cardGrid} xs={3}>
 
