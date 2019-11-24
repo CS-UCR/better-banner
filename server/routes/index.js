@@ -1,10 +1,12 @@
 const express = require('express');
-
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(res) {
-    res.json({ title: 'Express' });
-});
+let user = require('../controllers/user');
+let {letLoggedIn, hasAuth} = require('../middleware/hasAuth.js');
 
-module.exports = router;
+router.get('/login', user.show_login);
+router.get('/signup', user.show_signup);
+router.post('/login', user.login);
+router.post('/signup', user.signup);
+router.post('/logout', user.logout);
+router.get('/logout', user.logout);
