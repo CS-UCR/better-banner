@@ -1,26 +1,11 @@
 import React from 'react';
-import { AppBar,Toolbar,Typography,Button,Grid} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
-import FullScreen from '../components/FullScreenDialog';
 import FullScreenDialog from '../components/FullScreenDialog';
+import Drawer from '../components/DrawerAndHeader';
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 1
-    },
-    menuButton: {
-        marginRight: theme.spacing(2)
-    },
-    title: {
-        flexGrow: 1
-    },
-    cardGrid: {
-        paddingTop: theme.spacing(8),
-        paddingBottom: theme.spacing(8)
-    }
-}));
 // used as the index to map each entry
 const courses = [
     {
@@ -106,6 +91,29 @@ const courses = [
 ];
 
 
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1
+    },
+    menuButton: {
+        marginRight: theme.spacing(2)
+    },
+    title: {
+        flexGrow: 1
+    },
+    cardGrid: {
+        paddingTop: theme.spacing(8),
+        paddingBottom: theme.spacing(8)
+    },
+    list: {
+        width: 250,
+    },
+    fullList: {
+        width: 'auto',
+    },
+}));
+
+
 
 export default function Sandbox() {
     const classes = useStyles();
@@ -113,7 +121,12 @@ export default function Sandbox() {
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
 
-
+    const [drawerState, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });    
 
     function handleData (data){
         ToggleDialog(true);
@@ -125,12 +138,10 @@ export default function Sandbox() {
         SetData(null);
     }
 
-
-
     // return is like the render() you find in class 
     return (
         <>
-            <AppBar position='relative'>
+            {/* <AppBar position='relative'>
                 <Toolbar>
                     <Typography
                         variant='h6'
@@ -144,7 +155,8 @@ export default function Sandbox() {
                         Add
                     </Button>
                 </Toolbar>
-            </AppBar>
+            </AppBar> */}
+            <Drawer title='Registration Sandbox' />
             <Grid container spacing={4}>
                 {courses.map((x, index) => (
                     <Grid item key={index} className={classes.cardGrid} xs={3}>

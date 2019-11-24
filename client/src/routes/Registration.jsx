@@ -14,6 +14,7 @@ export default function AuditRoutes() {
             <Route path='/regpage' component={RegistrationPage} />
             <Route path='/regmainmenu' component={RegMainMenu} />
             <Route path='/audit' component={Audit} />
+            <Route path='/catalog'><h1>TODO</h1></Route>
             <Route path='/sandbox' component={Sandbox} />
             <Route path='/' component={Card} />
         </Switch>
