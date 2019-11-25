@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Typography, Slider} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import { flexbox } from '@material-ui/system';
+import ControlledOpenSelect from './MenuFilter';
 
 const useStyles = makeStyles({
     root: {
@@ -18,6 +21,11 @@ export default function UnitSlider(props){
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        const temp = {
+            min: newValue[0],
+            max: newValue[1]
+        }
+        props.range(temp);
     };
     
     return (

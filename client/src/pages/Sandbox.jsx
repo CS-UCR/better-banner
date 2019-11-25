@@ -8,6 +8,8 @@ import Drawer from '../components/DrawerAndHeader';
 import UnitSlider from '../components/UnitSlider';
 import FilterOption from '../components/MenuFilter';
 
+
+
 // used as the index to map each entry
 const courses = [
     {
@@ -128,19 +130,29 @@ export default function Sandbox() {
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
 
-    const [drawerState, setState] = React.useState({
-        left: false,
-    });    
+    // const [drawerState, setState] = React.useState({
+    //     left: false,
+    // });    
 
-    const [filter1, getFilter] = React.useState('');
-    const [filter2, getFilter2] = React.useState('');
 
+    const [unitFilter, setUnitFilter] = React.useState({
+        min: 0,
+        max: 200
+    });
+
+    const [filter1, setFilter] = React.useState('');
+    const [filter2, setFilter2] = React.useState('');
+
+    function SetUnitFilter(newFilter){
+        setUnitFilter(newFilter);
+    }
+    
     function retrieveFilter(newFilter){
-        getFilter(newFilter);
+        setFilter(newFilter);
     }
 
     function retrieveFilter2(newFilter){
-        getFilter2(newFilter);
+        setFilter2(newFilter);
     }
 
     function handleData (data){
@@ -156,14 +168,16 @@ export default function Sandbox() {
 
     let query1 = {courseTitle: filter1};
     let query2 = {Schedule: filter2};
-    let results;
-    if(filter1 === ''){
-        results = courses.filter(obj => obj.Schedule.includes(query2.Schedule));
-    }
-    else{
-        results = courses.filter(obj => (obj.courseTitle === query1.courseTitle && obj.Schedule.includes(query2.Schedule)) );
-    }
-    // results = courses.filter(obj => obj.Schedule.includes(query2.Schedule) );
+    let query3 = {courseTitle: unitFilter}
+    let results = courses;
+    results = courses.filter(obj => (parseInt(obj.courseTitle.substring(2), 10) >=  unitFilter.min && parseInt(obj.courseTitle.substring(2), 10) <= unitFilter.max));
+    // if(filter1 === '' && filter2 !== ''){
+    //     results = courses.filter(obj => obj.Schedule.includes(query2.Schedule));
+    // }
+    // else{
+    //     results = courses.filter(obj => (obj.courseTitle === query1.courseTitle && obj.Schedule.includes(query2.Schedule)) );
+    // }
+    
 
     // return is like the render() you find in class 
     return (
@@ -173,7 +187,7 @@ export default function Sandbox() {
             <h1>{filter2}</h1>
             <Grid container justify='center' spacing={4}>
                 <Grid item>
-                    <UnitSlider />
+                    <UnitSlider range={SetUnitFilter} />
                 </Grid>
                 <Grid item>
                     <FilterOption label='Course' filter={retrieveFilter} options={filterOption1} />
