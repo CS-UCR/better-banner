@@ -3,7 +3,7 @@ import datefns from 'date-fns';
 
 
 
-
+//returns an array with conflicting courses. Ex: ['biology', 'chemistry'] -> biology and chemistry conflict
 function getOverlappingClassesByDay(schedule = []) {
     const overlappingClasses = [];
     for (let i = 0; i < schedule.length; i += 1) {
@@ -24,9 +24,7 @@ function getOverlappingClassesByDay(schedule = []) {
     return overlappingClasses;
 }
 
-//['chemistry', 'physics', 'biology', 'chemistry', 'chemistry', 'math']
-
-
+//returns an object that contain a key thats a courseID and all the courses it conflicts with.
 function getConflictedCourses(schedule = []){
     const course = {};
     for(let i = 0; i < schedule.length; i += 2){
@@ -44,6 +42,8 @@ function getConflictedCourses(schedule = []){
     }
     return course;
 }
+
+
 
 
 
