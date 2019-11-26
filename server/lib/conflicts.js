@@ -1,11 +1,71 @@
 import datefns from 'date-fns';
 
+
+
+
+
+function getOverlappingClassesByDay(schedule = []) {
+    const overlappingClasses = [];
+    for (let i = 0; i < schedule.length; i += 1) {
+        if (i < schedule.length - 1) {
+            for (let j = i + 1; j < schedule.length; j += 1) {
+                if (schedule[i].days === schedule[j].days) {
+                    const overlapping = datefns.areIntervalsOverlapping(
+                        schedule[i],
+                        schedule[j]
+                    );
+                    if (overlapping) {
+                        overlappingClasses.push(schedule[i], schedule[j]);
+                    }
+                }
+            }
+        }
+    }
+    return overlappingClasses;
+}
+
+//['chemistry', 'physics', 'biology', 'chemistry', 'chemistry', 'math']
+
+
+function getConflictedCourses(schedule = []){
+    const course = {};
+    for(let i = 0; i < schedule.length; i += 2){
+        for (let j = 0; i < schedule.length; j += 1){
+            if(schedule[i].courseID === schedule[j].courseID && (j % 2 === 0)){
+                if(course[schedule[i].courseID]){
+                    course[schedule[i].courseID].push(schedule[j]);                   
+                }
+                else{
+                    course[schedule[i].courseID] = [schedule[j].courseID];
+                }
+            }
+
+        }
+    }
+    return course;
+}
+
+
+
+
+
+/*
+StudentClass {
+    Title: "Biology 101"
+    courseID: 12345
+    days: ['Monday', 'Wednesday', 'Thursday']
+    days: 'MWR'
+
+}
+*/
+
+
 /**
  * @description helper function for determining all overlapping classes
  * @arg classesToCheck - array of all the classes to check
  * assume each one has start & end property -- i.e. start & end key
- */
-function getOverlappingClasses(classesToCheck = []) {
+ 
+function getOverlappingTimes(classesToCheck = []) {
     const overlappingClasses = [];
     for (let i = 0; i < classesToCheck.length; i += 1) {
         if (i < classesToCheck.length - 1) {
@@ -27,6 +87,7 @@ function getOverlappingClasses(classesToCheck = []) {
     }
     return overlappingClasses;
 }
+*/
 
 /**
  *
@@ -38,9 +99,8 @@ function getOverlappingClasses(classesToCheck = []) {
 
 export function checkTimeConflict(classes) {}
 
-// classes.dependencies.co
-export function checkCoReq(classes) {}
-
 // probably going to make db call to the read
 // also since I am making a db call I would need to a 'next imoport'
 export function checkPreReq(classes) {}
+
+
