@@ -143,7 +143,7 @@ export default function PersistentDrawerLeft(props) {
                         <ListItemText>Catalog</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button key={3} component={Link} to='/regmainmenu' style={{textDecoration: 'none'}}>
+                    <ListItem button key={3} component={Link} to='/schedule' style={{textDecoration: 'none'}}>
                         <ListItemIcon><InboxIcon /></ListItemIcon>
                         <ListItemText>Schedule</ListItemText>
                     </ListItem>
