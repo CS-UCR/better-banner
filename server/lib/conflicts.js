@@ -44,6 +44,14 @@ function getConflictedCourses(schedule = []){
 }
 
 
+//prints the object that contains all the conflicting courses
+function courseConflictMsg(schedule = []){
+    const conflictingCourses = {};
+    schedule = getOverlappingClassesByDay(schedule);
+    conflictingCourses = getConflictedCourses(schedule);
+    console.log(conflictingCourses);
+}
+
 
 
 
