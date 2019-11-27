@@ -6,14 +6,24 @@ import faker from 'faker';
 /**
  * HELPER FNS
  */
-const selectRandom = (options = [], used = [], chosen = undefined) =>
-    chosen === undefined || used.includes(chosen.id)
+const selectRandom = (
+    options = [],
+    used = [],
+    chosen = undefined,
+    debug = false
+) => {
+    if (debug) {
+        console.log('used: ', used);
+        console.log(used.includes(chosen));
+    }
+    return chosen === undefined || used.includes(chosen)
         ? selectRandom(
               options,
               used,
               options[faker.random.number(options.length - 1)]
           )
         : chosen;
+};
 
 const except = (notInMe = [], fn, accessorFn = undefined) => {
     let result;
@@ -43,18 +53,18 @@ const chooseMeeting = choice => {
     }
 };
 
-const chooseQuarter = choice => {
-    switch (choice) {
-        case 0:
-            return 'F';
-        case 1:
-            return 'W';
-        case 2:
-            return 'S';
-        default:
-            return 'F';
-    }
-};
+// const chooseQuarter = choice => {
+//     switch (choice) {
+//         case 0:
+//             return 'F';
+//         case 1:
+//             return 'W';
+//         case 2:
+//             return 'S';
+//         default:
+//             return 'F';
+//     }
+// };
 
 /**
  * GENERATORS FOR SINGLE INSTANCES/ROWS
@@ -83,7 +93,7 @@ const genProfessors = emp_id => ({
     emp_id
 });
 
-const genClass = () => ({
+const genCourse = () => ({
     course_id: faker.random.number(),
     title: faker.random.words(),
     units: faker.random.number(),
@@ -93,22 +103,25 @@ const genClass = () => ({
     }
 });
 
-const genOfferings = () => ({
-    course_id: null, // will be redefined later
-    teacher: null, // will be redefined later
-    capacity: faker.random.number(),
-    location: `${faker.hacker.noun()} ${faker.random.number(400)}`,
-    days: chooseMeeting(faker.random.number(1)),
-    start: faker.date.recent(),
-    end: faker.date.soon(),
-    quarter: `${chooseQuarter(faker.random.number(2))}19`
-});
+const genOfferings = () => {
+    const startTime = faker.random.number(12);
+    return {
+        course_id: null, // will be redefined later
+        instructor: null, // will be redefined later
+        capacity: faker.random.number(100),
+        location: `${faker.name.lastName()} ${faker.random.number(400)}`,
+        days: chooseMeeting(faker.random.number(1)),
+        start: `${startTime}:00:00`,
+        end: `${faker.random.number(5) + startTime}:00:00`
+        // quarter: `${chooseQuarter(faker.random.number(2))}19`
+    };
+};
 
 /**
  * SEEDS
  */
 const seedUsers = knex => {
-    const userCount = 100;
+    const userCount = 500;
     const currentUsers = [];
     return knex
         .insert(
@@ -122,70 +135,80 @@ const seedUsers = knex => {
 };
 
 const seedUndergrads = knex => {
-    const undergradCount = 50;
+    const undergradCount = 250;
     const underGrads = [];
     return knex
         .select('id')
         .from('users')
         .then(options => {
-            // console.log(options);
+            const ids = options.map(({ id }) => id);
             return Array.from(new Array(undergradCount)).map(() => {
-                const user = selectRandom(options, underGrads);
-                underGrads.push(user.id);
-                return genUndergrad(user.id);
+                const userId = selectRandom(ids, underGrads);
+                underGrads.push(userId);
+                return genUndergrad(userId);
             });
         })
         .then(undergrads => {
             return knex.insert(undergrads).into('undergrads');
         })
         .catch(err => {
+            console.error('################## UNDERGRADS ###################');
             console.log(err);
         });
 };
 
 const seedProfessors = knex => {
-    const professorCount = 10;
+    const professorCount = 50;
     const professors = [];
-    let userPool = [];
-    return knex
-        .select('id')
-        .from('users')
-        .then(allUsers => {
-            userPool = allUsers;
-            return knex.select('student_id').from('undergrads');
-        })
-        .then(undergrads => {
-            const undergradIds = undergrads.map(({ student_id }) => student_id);
-            userPool = userPool
-                .filter(user => undergradIds.includes(user.id))
-                .map(({ id }) => id);
-            return Array.from(new Array(professorCount)).map(() => {
-                const prof = except(
-                    undergradIds,
-                    () => selectRandom(userPool, professors),
-                    obj => obj.emp_id
+
+    // select all ids from the users table
+    return (
+        knex
+            .select('id')
+            .from('users')
+            .whereNotIn(
+                'id',
+                knex.select('student_id as id').from('undergrads')
+            )
+            // currently only have id's of non students
+            .then(users => {
+                const userIds = users.map(({ id }) => id);
+                return Array.from(new Array(professorCount)).map(() => {
+                    const prof = selectRandom(
+                        userIds,
+                        professors,
+                        undefined
+                        // true
+                    );
+                    professors.push(prof);
+                    // console.log('accepted: ', prof);
+                    return genProfessors(prof);
+                });
+            })
+            .then(profs => {
+                return knex.insert(profs).into('professors');
+            })
+            .catch(err => {
+                console.error(
+                    '################## PROFESSORS ###################'
                 );
-                professors.push(prof);
-                return genProfessors(prof);
-            });
-        })
-        .then(profs => {
-            return knex.insert(profs).into('professors');
-        })
-        .catch(err => {
-            console.log(err);
-        });
+                console.log(err);
+            })
+    );
 };
 
-const seedClasses = knex => {
-    const courseCount = 100;
-    const classes = Array.from(new Array(courseCount)).map(() => genClass());
+const seedCourses = knex => {
+    const courseCount = 1000;
+    const currentCourses = [];
+    const classes = Array.from(new Array(courseCount)).map(() => {
+        const course = except(currentCourses, genCourse, obj => obj.course_id);
+        currentCourses.push(course.course_id);
+        return course;
+    });
     const classesWithDependencies = classes.map(currentCourse => {
         // 50% chance for this class to have a pre-req/co-req
         if (Math.random() * 100 > 50) {
-            const preReq = except([currentCourse.course_id], () =>
-                selectRandom(classes, [])
-            );
+            const preReq = selectRandom(classes, [currentCourse.course_id]);
             // NOT DOING CO-REQS FOR NOW
             // const coReq = selectRandom(classes, []);
             return {
@@ -197,34 +220,55 @@ const seedClasses = knex => {
         }
         return currentCourse;
     });
-    return knex.insert(classesWithDependencies).into('courses');
+    return knex
+        .insert(classesWithDependencies)
+        .into('courses')
+        .catch(err => {
+            console.error('################## COURSES ###################');
+            console.log(err);
+        });
 };
 
 const seedOfferings = knex => {
-    const offeringsCount = 25;
+    const offeringsCount = 500;
     const offerings = [];
+    let courseIds = [];
     return knex
         .select('course_id')
         .from('courses')
         .then(courses => {
-            const courseIds = courses.map(({ course_id }) => course_id);
+            courseIds = courses.map(({ course_id }) => course_id);
+            return knex.select('emp_id').from('professors');
+        })
+        .then(profs => {
             return knex
                 .insert(
                     Array.from(new Array(offeringsCount)).map(() => {
                         const selection = selectRandom(courseIds, offerings);
+                        const prof = selectRandom(
+                            profs.map(({ emp_id }) => emp_id)
+                        );
                         offerings.push(selection);
-                        return { ...genOfferings(), course_id: selection };
+                        return {
+                            ...genOfferings(),
+                            course_id: selection,
+                            instructor: prof
+                        };
                     })
                 )
                 .into('offerings');
+        })
+        .catch(err => {
+            console.error('################## OFFERINGS ###################');
+            console.log(err);
         });
 };
 
 exports.seed = function(knex) {
-    return Promise.all([
-        seedUsers(knex)
-            .then(() => seedUndergrads(knex))
-            .then(() => seedProfessors(knex)),
-        seedClasses(knex).then(() => seedOfferings(knex))
-    ]);
+    return seedUsers(knex)
+        .then(() => seedUndergrads(knex))
+        .then(() => seedProfessors(knex))
+        .then(() => seedCourses(knex))
+        .then(() => seedOfferings(knex));
+    // seedCourses(knex).then(() => seedOfferings(knex))
 };
