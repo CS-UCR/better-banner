@@ -4,6 +4,7 @@ import RequirementListItem from '../components/RequirementListItem';
 import Loader from '../components/Loader';
 // import useFetch from '../hooks/useFetch';
 import Title from '../components/Title';
+import Drawer from '../components/DrawerAndHeader';
 
 /**
  * An arrow function returns whatever follows if there are no brackets
@@ -47,7 +48,8 @@ export default function Audit() {
         </div>
     ) : (
         <Container maxWidth='md'>
-            <Title>Audit</Title>
+            <Drawer title='Audit' />
+            {/* <Title>Audit</Title> */}
             <List>
                 {data.map(({ complete, total, label }, index) => (
                     <Slide

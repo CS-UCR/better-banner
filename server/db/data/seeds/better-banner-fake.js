@@ -4,9 +4,8 @@
 import faker from 'faker';
 
 /**
- * SELECTION & RELATION FUNCTIONS
+ * HELPER FNS
  */
-const relate = (knex, { table, field }) => knex.select(field).from(table);
 const selectRandom = (options = [], used = [], chosen = undefined) =>
     chosen === undefined || used.includes(chosen.id)
         ? selectRandom(
@@ -16,11 +15,17 @@ const selectRandom = (options = [], used = [], chosen = undefined) =>
           )
         : chosen;
 
-const except = (notInMe = [], fn) => {
+const except = (notInMe = [], fn, accessorFn = undefined) => {
     let result;
+    let condition = r => notInMe.includes(r);
+
+    if (accessorFn) {
+        condition = r => notInMe.includes(accessorFn(r));
+    }
+
     do {
         result = fn();
-    } while (!notInMe.includes(result));
+    } while (condition(result));
     return result;
 };
 
@@ -61,20 +66,20 @@ const genUser = () => ({
     id: faker.random.number()
 });
 
-const genQuarter = () => ({
-    id: faker.random.number(),
-    quarterCode: `${chooseQuarter(faker.random.number())}${faker.random.number(
-        20
-    )}`
-    // possibly other misc details of the quarter later
-});
+// const genQuarter = () => ({
+//     id: faker.random.number(),
+//     quarterCode: `${chooseQuarter(faker.random.number())}${faker.random.number(
+//         20
+//     )}`
+//     // possibly other misc details of the quarter later
+// });
 
 const genUndergrad = student_id => ({
     student_id,
     completed_courses: []
 });
 
-const genProfessors = ({ emp_id }) => ({
+const genProfessors = emp_id => ({
     emp_id
 });
 
@@ -89,11 +94,13 @@ const genClass = () => ({
 });
 
 const genOfferings = () => ({
-    courseId: null, // will be redefined later
+    course_id: null, // will be redefined later
     teacher: null, // will be redefined later
     capacity: faker.random.number(),
     location: `${faker.hacker.noun()} ${faker.random.number(400)}`,
-    start: chooseMeeting(faker.random.number(1)),
+    days: chooseMeeting(faker.random.number(1)),
+    start: faker.date.recent(),
+    end: faker.date.soon(),
     quarter: `${chooseQuarter(faker.random.number(2))}19`
 });
 
@@ -102,8 +109,15 @@ const genOfferings = () => ({
  */
 const seedUsers = knex => {
     const userCount = 100;
+    const currentUsers = [];
     return knex
-        .insert(Array.from(new Array(userCount)).map(() => genUser()))
+        .insert(
+            Array.from(new Array(userCount)).map(() => {
+                const user = except(currentUsers, genUser, obj => obj.id);
+                currentUsers.push(user.id);
+                return user;
+            })
+        )
         .into('users');
 };
 
@@ -132,28 +146,34 @@ const seedUndergrads = knex => {
 const seedProfessors = knex => {
     const professorCount = 10;
     const professors = [];
-    let pool = [];
+    let userPool = [];
     return knex
         .select('id')
         .from('users')
         .then(allUsers => {
-            pool = allUsers;
-            return knex.select('id').from('undergrads');
+            userPool = allUsers;
+            return knex.select('student_id').from('undergrads');
         })
         .then(undergrads => {
-            const undergradIds = undergrads.map(({ id }) => id);
-            pool = pool.filter(user => undergradIds.includes(user.id));
-            return knex
-                .insert(
-                    Array.from(new Array(professorCount)).map(() => {
-                        const prof = except(undergradIds, () =>
-                            selectRandom(pool, professors)
-                        );
-                        professors.push(prof);
-                        return genProfessors(prof);
-                    })
-                )
-                .into('professors');
+            const undergradIds = undergrads.map(({ student_id }) => student_id);
+            userPool = userPool
+                .filter(user => undergradIds.includes(user.id))
+                .map(({ id }) => id);
+            return Array.from(new Array(professorCount)).map(() => {
+                const prof = except(
+                    undergradIds,
+                    () => selectRandom(userPool, professors),
+                    obj => obj.emp_id
+                );
+                professors.push(prof);
+                return genProfessors(prof);
+            });
+        })
+        .then(profs => {
+            return knex.insert(profs).into('professors');
+        })
+        .catch(err => {
+            console.log(err);
         });
 };
 
@@ -182,14 +202,29 @@ const seedClasses = knex => {
 
 const seedOfferings = knex => {
     const offeringsCount = 25;
-    const offerings = Array.from(new Array(offeringsCount)).map(() =>
-        genOfferings()
-    );
+    const offerings = [];
+    return knex
+        .select('course_id')
+        .from('courses')
+        .then(courses => {
+            const courseIds = courses.map(({ course_id }) => course_id);
+            return knex
+                .insert(
+                    Array.from(new Array(offeringsCount)).map(() => {
+                        const selection = selectRandom(courseIds, offerings);
+                        offerings.push(selection);
+                        return { ...genOfferings(), course_id: selection };
+                    })
+                )
+                .into('offerings');
+        });
 };
 
 exports.seed = function(knex) {
     return Promise.all([
-        seedUsers(knex).then(() => seedUndergrads(knex)),
-        seedClasses(knex)
+        seedUsers(knex)
+            .then(() => seedUndergrads(knex))
+            .then(() => seedProfessors(knex)),
+        seedClasses(knex).then(() => seedOfferings(knex))
     ]);
 };

@@ -1,45 +1,46 @@
 {
-    "name": "client",
-    "version": "0.1.0",
-    "private": true,
-    "proxy": "http://localhost:3001",
-    "dependencies": {
-        "@material-ui/core": "^4.2.1",
-        "@material-ui/icons": "^4.5.1",
-        "clsx": "^1.0.4",
-        "moment": "^2.24.0",
-        "notistack": "^0.9.5",
-        "prop-types": "^15.7.2",
-        "react": "^16.8.6",
-        "react-big-calendar": "^0.23.0",
-        "react-d3-tree": "^1.15.3",
-        "react-dom": "^16.8.6",
-        "react-redux": "^7.1.3",
-        "react-router-dom": "^5.1.2",
-        "react-scripts": "^3.2.0",
-        "react-trello": "^2.2.3",
-        "redux-thunk": "^2.3.0"
-    },
-    "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "eject": "react-scripts eject",
-        "storybook": "start-storybook --port 3003"
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "@storybook/react": "^5.1.10"
-    }
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3001",
+  "dependencies": {
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.5.1",
+    "clsx": "^1.0.4",
+    "moment": "^2.24.0",
+    "notistack": "^0.9.5",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-big-calendar": "^0.23.0",
+    "react-d3-tree": "^1.15.3",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.2.0",
+    "react-trello": "^2.2.3",
+    "redux-thunk": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook --port 3003"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/react": "^5.1.10"
+  }
 }

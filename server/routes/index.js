@@ -1,12 +1,39 @@
-// const express = require('express');
-// const router = express.Router();
+/* eslint-disable import/no-extraneous-dependencies */
+import express from 'express';
+import faker from 'faker';
 
-// let user = require('../controllers/user');
-// let {letLoggedIn, hasAuth} = require('../middleware/hasAuth.js');
+const router = express.Router();
 
-// router.get('/login', user.show_login);
-// router.get('/signup', user.show_signup);
-// router.post('/login', user.login);
-// router.post('/signup', user.signup);
-// router.post('/logout', user.logout);
-// router.get('/logout', user.logout);
+const conflicts = require('../lib/conflicts');
+
+const genOfferings = () => ({
+    courseId: faker.random.number(), // will be redefined later
+    teacher: null, // will be redefined later
+    capacity: faker.random.number(),
+    location: `${faker.hacker.noun()} ${faker.random.number(400)}`,
+    // start: chooseMeeting(faker.random.number(1)),
+    days: 'MWF',
+    start: faker.date.recent(),
+    end: faker.date.soon()
+    //quarter: `${chooseQuarter(faker.random.number(2))}19`
+});
+
+function generateObj() {
+    const temp = [];
+    for (let i = 0; i < 100; i += 1) {
+        console.log('hello');
+        temp.push(genOfferings());
+    }
+    console.log(temp);
+    return temp;
+}
+
+router.get('/', function(req, res, next) {
+    console.log('starting executing');
+
+    conflicts.courseConflictMsg(generateObj());
+});
+
+// router.get('/', conflicts.courseConflictMsg);
+
+module.exports = router;
