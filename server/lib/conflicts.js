@@ -1,7 +1,7 @@
 import datefns from 'date-fns';
 
 
-
+//let schedule = ["Biology", "Chemistry", "Physics", "Algebra", "Biology", "English", "Biology", "Physics"];
 
 //returns an array with conflicting courses. Ex: ['biology', 'chemistry'] -> biology and chemistry conflict
 function getOverlappingClassesByDay(schedule = []) {
@@ -24,6 +24,7 @@ function getOverlappingClassesByDay(schedule = []) {
     return overlappingClasses;
 }
 
+
 //returns an object that contain a key thats a courseID and all the courses it conflicts with.
 function getConflictedCourses(schedule = []){
     const course = {};
@@ -45,10 +46,9 @@ function getConflictedCourses(schedule = []){
 
 
 //prints the object that contains all the conflicting courses
-function courseConflictMsg(schedule = []){
-    const conflictingCourses = {};
-    schedule = getOverlappingClassesByDay(schedule);
-    conflictingCourses = getConflictedCourses(schedule);
+export function courseConflictMsg(schedule = []){
+    const temp = getOverlappingClassesByDay(schedule);
+    const conflictingCourses = getConflictedCourses(temp);
     console.log(conflictingCourses);
 }
 
@@ -107,8 +107,13 @@ function getOverlappingTimes(classesToCheck = []) {
 
 export function checkTimeConflict(classes) {}
 
+
+
+
 // probably going to make db call to the read
 // also since I am making a db call I would need to a 'next imoport'
-export function checkPreReq(classes) {}
+export function checkPreReq(classes) {
+    
+}
 
 
