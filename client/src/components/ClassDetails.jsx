@@ -15,6 +15,8 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import Container from '@material-ui/core/Container';
+import Calendar from './Calendar';
+import Tree from './Tree';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -82,7 +84,7 @@ export default function NestedList(props) {
                 </ListItem>
                 <Collapse in={open.Schedule} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        <ListItem button onClick={()=>OpenDialog(details)} className={classes.nested}>
+                        <ListItem button onClick={()=>OpenDialog(<Calendar />)} className={classes.nested}>
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>
@@ -101,7 +103,7 @@ export default function NestedList(props) {
                 </ListItem>
                 <Collapse in={open.Overview} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        <ListItem button className={classes.nested}>
+                        <ListItem button onClick={()=>OpenDialog(<Tree />)} className={classes.nested}>
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>

@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(2),
         flex: 1,
     },
-    calendar: {
+    data: {
         padding: theme.spacing(2),
     }
 }));
@@ -39,8 +39,9 @@ export default function FullScreenDialog(props) {
                         </IconButton>    
                     </Toolbar>
                 </AppBar>
-                <div className={classes.calendar}>
-                    <Calender />
+                <div className={classes.data} style={{width: '100vw', height: '100vh'}}>
+                    {props.data}
+                    {/* <Calender /> */}
                 </div>
             </Dialog>
         </div>

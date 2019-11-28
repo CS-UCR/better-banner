@@ -468,7 +468,7 @@ export default function treeFunction(){
         
         <div id='treeWrapper' style={{width: '100vw', height: '100vh' }}>
             <Drawer title='Catalog' />
-            <Tree data={treeData} orientation='vertical' separation={{siblings: 3, nonSiblings: 3}} />
+            <Tree  />
         </div>
     );
 
