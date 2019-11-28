@@ -38,14 +38,19 @@ function generateObj() {
 //     conflicts.courseConflictMsg(generateObj());
 // });
 
+
+
 router.get('/', function(req, res, next) {
     // conflicts.areOverlapping();
-    console.log('getting called');
+    // console.log('getting called');
     generateObj()
         .then(rows => {
             // console.log('success?');
+
             res.status(200).send(rows);
             console.log(rows);
+            console.log(conflicts.areOverlapping(rows[0], rows[1]));
+            // console.log(rows);
         })
         .catch(err => {
             console.log(err);
