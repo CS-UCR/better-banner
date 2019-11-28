@@ -5,6 +5,7 @@ import Drawer from '../components/DrawerAndHeader';
 import Tabs from '../components/Tabs';
 import Calendar from '../components/Calendar'
 
+
 export default function RegistrationPage(){
 
     

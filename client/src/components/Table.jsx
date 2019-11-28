@@ -19,6 +19,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import useFetch from '../hooks/useFetch';
+
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
@@ -86,6 +88,8 @@ const headCells = [
     }
 ];
 
+
+
 function EnhancedTableHead(props) {
     const {
         classes,
@@ -100,6 +104,7 @@ function EnhancedTableHead(props) {
         onRequestSort(event, property);
     };
 
+    
     return (
         <TableHead>
             <TableRow>
@@ -257,6 +262,11 @@ export default function EnhancedTable() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+    const [loading, data] = useFetch('');
+    console.log(data);
+    console.log(loading);
+
+
     const handleRequestSort = (event, property) => {
         const isDesc = orderBy === property && order === 'desc';
         setOrder(isDesc ? 'asc' : 'desc');
@@ -310,7 +320,7 @@ export default function EnhancedTable() {
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-    return (
+    return loading ? <div>loading</div> : (
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />

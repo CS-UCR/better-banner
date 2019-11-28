@@ -65,7 +65,7 @@ const MyCalendar = props => (
             startAccessor='start'
             endAccessor='end'
             step={15}
-            style={{ height: 500 }}
+            style={{ height: 900 }}
             defaultView={'week'}
             views={['week']}
             drilldownView={null}
