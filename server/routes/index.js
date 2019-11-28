@@ -38,15 +38,12 @@ function generateObj() {
 //     conflicts.courseConflictMsg(generateObj());
 // });
 
-
-
-router.get('/', function(req, res, next) {
+router.get('/api/sandbox', function(req, res, next) {
     // conflicts.areOverlapping();
     // console.log('getting called');
     generateObj()
         .then(rows => {
             // console.log('success?');
-
             res.status(200).send(rows);
             console.log(rows);
             console.log(conflicts.areOverlapping(rows[0], rows[1]));

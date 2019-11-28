@@ -8,13 +8,14 @@ export default function useFetch(url) {
     // this hook only runs the first time because of the empty array dependency list
     useEffect(() => {
         // get information on user #1
-        fetch(`http://localhost:3001/${url}`, {
-            method: 'get'
+        fetch('/api/sandbox', {
+            method: 'GET'
         })
             .then(res => {
-                console.log(res);
-                setData(res.json().then(() => setLoading(false)));
-                // setLoading(false);
+                res.json().then(responseData => {
+                    setData(responseData);
+                    setLoading(false);
+                });
             })
             // eslint-disable-next-line
             .catch(e => console.log(e));
