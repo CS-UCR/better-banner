@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "nodemon --exec babel-node bin/www",
-        "start": "NODE_ENV=development npm-run-all startdb && dev",
+        "start": "NODE_ENV=development npm-run-all startdb dev",
         "startdb": "./db/startdb.sh /tmp/better-banner",
         "resetdb": "./db/resetdb.sh /tmp/better-banner",
         "stopdb": "./db/stopdb.sh /tmp/better-banner",
@@ -28,6 +28,6 @@
         "@babel/core": "^7.6.4",
         "@babel/node": "^7.6.3",
         "@babel/preset-env": "^7.6.3",
-        "faker": "^4.1.0"
+        "faker": "https://github.com/Marak/faker.js.git"
     }
 }
