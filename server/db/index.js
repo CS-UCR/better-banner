@@ -1,8 +1,7 @@
-import knex from 'knex';
-import knexfile from '../knexfile';
+import reads from './reads';
+import writes from './writes';
 
-// default to development environment
-const env = process.env.NODE_ENV || 'development';
-const configOptions = knexfile[env];
-
-export default knex(configOptions);
+export default {
+    reads,
+    writes
+};

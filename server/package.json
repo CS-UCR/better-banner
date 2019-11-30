@@ -8,7 +8,9 @@
         "startdb": "./db/startdb.sh /tmp/better-banner",
         "resetdb": "./db/resetdb.sh /tmp/better-banner",
         "stopdb": "./db/stopdb.sh /tmp/better-banner",
-        "knex": "babel-node node_modules/knex/bin/cli.js"
+        "knex": "babel-node node_modules/knex/bin/cli.js",
+        "migrate": "knex migrate:latest",
+        "seed": "babel-node node_modules/knex/bin/cli.js seed:run"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",

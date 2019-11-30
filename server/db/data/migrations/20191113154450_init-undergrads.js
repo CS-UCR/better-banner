@@ -8,7 +8,7 @@ exports.up = function(knex) {
             .onDelete('cascade');
 
         // will be an array of completed course id's
-        table.specificType('completed_courses', 'jsonb[]');
+        table.specificType('completed_courses', 'integer[]');
     });
 };
 

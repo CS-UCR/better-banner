@@ -117,6 +117,11 @@ const genOfferings = () => {
     };
 };
 
+// const genRegistration = studentId => ({
+//     student_id: studentId,
+//     classes: null // will be redefined later
+// });
+
 /**
  * SEEDS
  */
@@ -142,14 +147,34 @@ const seedUndergrads = knex => {
         .from('users')
         .then(options => {
             const ids = options.map(({ id }) => id);
-            return Array.from(new Array(undergradCount)).map(() => {
+            const undergrads = Array.from(new Array(undergradCount)).map(() => {
                 const userId = selectRandom(ids, underGrads);
                 underGrads.push(userId);
                 return genUndergrad(userId);
             });
-        })
-        .then(undergrads => {
-            return knex.insert(undergrads).into('undergrads');
+            return knex
+                .select('course_id')
+                .from('offerings')
+                .then(courses => {
+                    const courseIds = courses.map(({ course_id }) => course_id);
+                    const undergradsWithCompletedCourses = undergrads.map(
+                        ug => {
+                            // stick in 3 random completed courses, doesn't matter if they collide in this case
+                            const completedCourses = [
+                                selectRandom(courseIds),
+                                selectRandom(courseIds),
+                                selectRandom(courseIds)
+                            ];
+                            return {
+                                ...ug,
+                                completed_courses: completedCourses
+                            };
+                        }
+                    );
+                    return knex
+                        .insert(undergradsWithCompletedCourses)
+                        .into('undergrads');
+                });
         })
         .catch(err => {
             console.error('################## UNDERGRADS ###################');
@@ -264,11 +289,40 @@ const seedOfferings = knex => {
         });
 };
 
+const seedRegistration = knex => {
+    return knex
+        .select('student_id')
+        .from('undergrads')
+        .then(students => {
+            const studentIds = students.map(({ student_id }) => student_id);
+            return knex
+                .select('course_id')
+                .from('offerings')
+                .then(courses => {
+                    const courseIds = courses.map(({ course_id }) => course_id);
+                    return knex
+                        .insert(
+                            studentIds.map(studentId => {
+                                const registeredCourse = [
+                                    selectRandom(courseIds)
+                                ];
+                                return {
+                                    student_id: studentId,
+                                    classes: registeredCourse
+                                };
+                            })
+                        )
+                        .into('registration');
+                });
+        });
+};
+
 exports.seed = function(knex) {
     return seedUsers(knex)
-        .then(() => seedUndergrads(knex))
         .then(() => seedProfessors(knex))
         .then(() => seedCourses(knex))
-        .then(() => seedOfferings(knex));
+        .then(() => seedOfferings(knex))
+        .then(() => seedUndergrads(knex))
+        .then(() => seedRegistration(knex));
     // seedCourses(knex).then(() => seedOfferings(knex))
 };

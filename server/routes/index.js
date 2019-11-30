@@ -25,7 +25,7 @@ function generateObj() {
     const temp = [];
     // console.log('hello');
     // temp.push(genOfferings());
-    return db
+    return db.reads.raw()
         .select('*')
         .from('offerings')
         .limit(2);
@@ -39,15 +39,10 @@ function generateObj() {
 // });
 
 router.get('/api/sandbox', function(req, res, next) {
-    // conflicts.areOverlapping();
-    // console.log('getting called');
     generateObj()
         .then(rows => {
-            // console.log('success?');
             res.status(200).send(rows);
-            console.log(rows);
             console.log(conflicts.areOverlapping(rows[0], rows[1]));
-            // console.log(rows);
         })
         .catch(err => {
             console.log(err);
