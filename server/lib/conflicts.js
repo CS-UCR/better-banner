@@ -28,10 +28,10 @@ export function areOverlapping(course1, course2){
     const { start: start1, end: end1 } = course1;
     const { start: start2, end: end2 } = course2;
 
-    console.log(parseInt(start1.substring(0,2), 10)); // 3
-    console.log(parseInt(end1.substring(0,2), 10)); // 8
-    console.log(parseInt(start2.substring(0,2), 10));// 6
-    console.log(parseInt(end2.substring(0,2), 10)); // 10
+    // console.log(parseInt(start1.substring(0,2), 10)); // 3
+    // console.log(parseInt(end1.substring(0,2), 10)); // 8
+    // console.log(parseInt(start2.substring(0,2), 10));// 6
+    // console.log(parseInt(end2.substring(0,2), 10)); // 10
 
     if( (parseInt(start1.substring(0,2), 10) < parseInt(end2.substring(0,2), 10)) && (parseInt(end1.substring(0,2), 10) >= parseInt(end2.substring(0,2), 10)) ){
         return true;
@@ -128,7 +128,7 @@ export function checkTimeConflict(classes) {}
 
 
 // probably going to make db call to the read
-// also since I am making a db call I would need to a 'next imoport'
+// also since I am making a db call I would need to a 'next import'
 export function checkPreReq(classes) {
 
 }
