@@ -20,28 +20,30 @@ function parsingData(classMeeting) {
     const {days, start, end, title} = classMeeting;
     const meetings = [];
 
+    
+
     if (days == 'MWF') {
         let class1 = new Date();
         class1.setDate(date1.getDate() - daysLeftOfWeek + 1);
+        class1.setMinutes(0);
         meetings.push(class1);
         class1 = new Date();
         class1.setDate(date1.getDate() - daysLeftOfWeek + 3);
+        class1.setMinutes(0);
         meetings.push(class1);
         class1 = new Date();
         class1.setDate(date1.getDate() - daysLeftOfWeek + 5);
+        class1.setMinutes(0);
         meetings.push(class1);
-        
-        
-        // meetings.push(new Date().setDate(date1.getDate() - daysLeftOfWeek + 1));
-        // meetings.push(new Date().setDate(date1.getDate() - daysLeftOfWeek + 3));
-        // meetings.push(new Date().setDate(date1.getDate() - daysLeftOfWeek + 5));
     }
     else {
         let class1 = new Date();
         class1.setDate(date1.getDate() - daysLeftOfWeek + 2);
+        class1.setMinutes(0);
         meetings.push(class1);
         class1 = new Date();
         class1.setDate(date1.getDate() - daysLeftOfWeek + 4);
+        class1.setMinutes(0);
         meetings.push(class1);
     }
     const initialTime = parseInt(start[0] + start[1]);
@@ -61,7 +63,6 @@ function parsingData(classMeeting) {
         classTimesObject.allDay = false;
         classTimesObject.title = title;
         classTimes.push(classTimesObject);
-
     }
 
     return classTimes;
@@ -85,9 +86,10 @@ const genOfferings = () => {
         // instructor: null, // will be redefined later
         // capacity: faker.random.number(100),
         // location: `${faker.name.lastName()} ${faker.random.number(400)}`,
-        days: chooseMeeting(Math.floor(Math.random() * 1)),
+        days: chooseMeeting(Math.floor(Math.random() * 2)),
         start: `${startTime}:00:00`,
-        end: `${Math.floor(Math.random() * 2) + startTime}:00:00`,
+        //end: `${Math.ceil(Math.random() * 2) + startTime}:00:00`,
+        end: `${startTime + 1}:00:00`,
         title: 'CS179'
         // quarter: `${chooseQuarter(faker.random.number(2))}19`
     };
