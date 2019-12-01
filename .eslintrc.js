@@ -29,7 +29,7 @@ module.exports = {
         'import/resolver': {
             node: {
                 paths: ['.']
-            },
+            }
             // alias: {
             //     map: [['/src', './src']],
             //     extensions: ['.ts', '.js', '.jsx', '.json']

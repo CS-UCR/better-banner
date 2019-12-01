@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, FormLabel, Paper } from '@material-ui/core';
+import { Grid, FormLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
@@ -164,9 +164,9 @@ export default function Sandbox() {
     }
 
 
-    let query1 = {courseTitle: filter1};
-    let query2 = {Schedule: filter2};
-    let query3 = {courseTitle: unitFilter}
+    // let query1 = {courseTitle: filter1};
+    // let query2 = {Schedule: filter2};
+    // let query3 = {courseTitle: unitFilter}
     let results = courses;
     results = courses.filter(obj => (parseInt(obj.courseTitle.substring(2), 10) >=  unitFilter.min && parseInt(obj.courseTitle.substring(2), 10) <= unitFilter.max));
     // if(filter1 === '' && filter2 !== ''){

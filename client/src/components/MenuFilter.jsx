@@ -6,19 +6,16 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-
 const useStyles = makeStyles(theme => ({
     button: {
         display: 'block',
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(2)
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 120,
-    },
+        minWidth: 120
+    }
 }));
-
-
 
 export default function ControlledOpenSelect(props) {
     const classes = useStyles();
@@ -45,9 +42,11 @@ export default function ControlledOpenSelect(props) {
 
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel id='demo-controlled-open-select-label'>{label}</InputLabel>
+            <InputLabel id='demo-controlled-open-select-label'>
+                {label}
+            </InputLabel>
             <Select
-                labelId='demo-controlled-open-select-label'
+                // labelId='demo-controlled-open-select-label'
                 id='demo-controlled-open-select'
                 open={open}
                 onClose={handleClose}
@@ -55,11 +54,11 @@ export default function ControlledOpenSelect(props) {
                 value={value}
                 onChange={handleChange}
             >
-                <MenuItem value=''>
-                    None
-                </MenuItem>
+                <MenuItem value=''>None</MenuItem>
                 {options.map((x, index) => (
-                    <MenuItem key={index} value={x}>{x}</MenuItem>
+                    <MenuItem key={index} value={x}>
+                        {x}
+                    </MenuItem>
                 ))}
                 {/* <MenuItem value={'CS150'}>CS150</MenuItem>
                 <MenuItem value={'CS179G'}>CS179G</MenuItem>
@@ -72,5 +71,5 @@ export default function ControlledOpenSelect(props) {
 ControlledOpenSelect.propTypes = {
     label: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
-    filter: PropTypes.string.isRequired,
-}
+    filter: PropTypes.func.isRequired
+};

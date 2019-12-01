@@ -19,6 +19,7 @@ export default function useFetch(...args) {
             })
             // eslint-disable-next-line
             .catch(e => console.log(e));
+    // eslint-disable-next-line
     }, []);
 
     return [loading, data];
