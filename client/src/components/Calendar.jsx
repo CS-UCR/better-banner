@@ -17,7 +17,7 @@ var daysLeftOfWeek = date1.getDay() % 7;
 
 
 function parsingData(classMeeting) {
-    const {days, start, end} = classMeeting;
+    const {days, start, end, title} = classMeeting;
     const meetings = [];
 
     if (days == 'MWF') {
@@ -59,7 +59,7 @@ function parsingData(classMeeting) {
         classTimesObject.start = new Date(meetings[i].setHours(correctTime.start));
         classTimesObject.end = new Date(meetings[i].setHours(correctTime.end));
         classTimesObject.allDay = false;
-        classTimesObject.title = 'CS179';
+        classTimesObject.title = title;
         classTimes.push(classTimesObject);
 
     }
@@ -87,7 +87,8 @@ const genOfferings = () => {
         // location: `${faker.name.lastName()} ${faker.random.number(400)}`,
         days: chooseMeeting(Math.floor(Math.random() * 1)),
         start: `${startTime}:00:00`,
-        end: `${Math.floor(Math.random() * 2) + startTime}:00:00`
+        end: `${Math.floor(Math.random() * 2) + startTime}:00:00`,
+        title: 'CS179'
         // quarter: `${chooseQuarter(faker.random.number(2))}19`
     };
 };
