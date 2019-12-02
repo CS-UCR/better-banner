@@ -97,16 +97,16 @@ const MyCalendar = props => {
     const data = parsingData(genOfferings());
     console.log(data);
     return (
-        <div>
+        <div style={{ width: '100%', height: '100%' }}>
             <Calendar
                 localizer={localizer}
                 startAccessor='start'
                 endAccessor='end'
                 step={15}
-                style={{ height: 900 }}
+                // style={{ height: '900px', width: '100%' }}
                 defaultView='week'
                 views={['week']}
-                drilldownView={null}
+                // drilldownView={null}
                 toolbar={false}
                 events={data}
                 // { title: 'classname', start: initialStart, end: end, allDay: false },

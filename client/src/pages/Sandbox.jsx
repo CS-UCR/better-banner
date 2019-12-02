@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
 import FullScreenDialog from '../components/FullScreenDialog';
-import Drawer from '../components/DrawerAndHeader';
+// import Drawer from '../layout/DrawerAndHeader';
 import UnitSlider from '../components/UnitSlider';
 import FilterOption from '../components/MenuFilter';
+import useTitle from '../hooks/useTitle';
 
 
 
@@ -126,7 +127,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Sandbox() {
     const classes = useStyles();
-
+    useTitle('Registration Sandbox');
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
 
@@ -180,7 +181,7 @@ export default function Sandbox() {
     // return is like the render() you find in class 
     return (
         <>
-            <Drawer title='Registration Sandbox' />
+            {/* <Drawer title='Registration Sandbox' /> */}
             <h1>{filter1}</h1>
             <h1>{filter2}</h1>
             <Grid container justify='center' spacing={4}>

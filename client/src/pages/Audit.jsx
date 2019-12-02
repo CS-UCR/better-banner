@@ -2,9 +2,11 @@ import React from 'react';
 import { List, Slide, Container } from '@material-ui/core';
 import RequirementListItem from '../components/RequirementListItem';
 import Loader from '../components/Loader';
+import useTitle from '../hooks/useTitle';
+// import TitleContext from '../layout/TitleContext';
 // import useFetch from '../hooks/useFetch';
 // import Title from '../components/Title';
-import Drawer from '../components/DrawerAndHeader';
+// import Drawer from '../layout/DrawerAndHeader';
 
 /**
  * An arrow function returns whatever follows if there are no brackets
@@ -14,6 +16,7 @@ const calcTimeout = index => (index + 1) * 200;
 
 export default function Audit() {
     // const [loading, data] = useFetch('user/1/audit');
+    useTitle('Audit');
     const loading = false;
     const data = [
         {
@@ -48,7 +51,7 @@ export default function Audit() {
         </div>
     ) : (
         <Container maxWidth='md'>
-            <Drawer title='Audit' />
+            {/* <Drawer title='Audit' /> */}
             {/* <Title>Audit</Title> */}
             <List>
                 {data.map(({ complete, total, label }, index) => (

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -17,69 +18,76 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import { Link } from 'react-router-dom';
+import TitleContext from './TitleContext';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
     root: {
-        display: 'flex',
+        display: 'flex'
     },
     appBar: {
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
+            duration: theme.transitions.duration.leavingScreen
+        })
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
         marginLeft: drawerWidth,
         transition: theme.transitions.create(['margin', 'width'], {
             easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
+            duration: theme.transitions.duration.enteringScreen
+        })
     },
     menuButton: {
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(2)
     },
     hide: {
-        display: 'none',
+        display: 'none'
     },
     drawer: {
         width: drawerWidth,
-        flexShrink: 0,
+        flexShrink: 0
     },
     drawerPaper: {
-        width: drawerWidth,
+        width: drawerWidth
     },
     drawerHeader: {
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        justifyContent: 'flex-end'
     },
     content: {
         flexGrow: 1,
         padding: theme.spacing(3),
+
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
+            duration: theme.transitions.duration.leavingScreen
         }),
-        marginLeft: -drawerWidth,
+        marginLeft: -drawerWidth
+    },
+    toolbar: {
+        marginBottom: theme.spacing(8)
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
+            duration: theme.transitions.duration.enteringScreen
         }),
-        marginLeft: 0,
-    },
+        marginLeft: 0
+    }
 }));
 
 export default function PersistentDrawerLeft(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const { children } = props;
+    const [title, setTitle] = React.useState('Better-Banner');
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -95,7 +103,7 @@ export default function PersistentDrawerLeft(props) {
             <AppBar
                 position='fixed'
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
+                    [classes.appBarShift]: open
                 })}
             >
                 <Toolbar>
@@ -104,12 +112,15 @@ export default function PersistentDrawerLeft(props) {
                         aria-label='open drawer'
                         onClick={handleDrawerOpen}
                         edge='start'
-                        className={clsx(classes.menuButton, open && classes.hide)}
+                        className={clsx(
+                            classes.menuButton,
+                            open && classes.hide
+                        )}
                     >
                         <MenuIcon />
                     </IconButton>
                     <Typography variant='h6' noWrap>
-                        {props.title}
+                        {title}
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -119,32 +130,68 @@ export default function PersistentDrawerLeft(props) {
                 anchor='left'
                 open={open}
                 classes={{
-                    paper: classes.drawerPaper,
+                    paper: classes.drawerPaper
                 }}
             >
                 <div className={classes.drawerHeader}>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+                        {theme.direction === 'ltr' ? (
+                            <ChevronLeftIcon />
+                        ) : (
+                            <ChevronRightIcon />
+                        )}
                     </IconButton>
                 </div>
                 <List>
-                    <ListItem button key={0} component={Link} to='/audit' style={{textDecoration: 'none'}}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
+                    <ListItem
+                        button
+                        key={0}
+                        component={Link}
+                        to='/audit'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
                         <ListItemText>Audit</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button key={1} component={Link} to='/sandbox' style={{textDecoration: 'none'}}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
+                    <ListItem
+                        button
+                        key={1}
+                        component={Link}
+                        to='/sandbox'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
                         <ListItemText>Registration</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button key={2} component={Link} to='/catalog' style={{textDecoration: 'none'}}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
+                    <ListItem
+                        button
+                        key={2}
+                        component={Link}
+                        to='/catalog'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
                         <ListItemText>Catalog</ListItemText>
                     </ListItem>
                     <Divider />
-                    <ListItem button key={3} component={Link} to='/schedule' style={{textDecoration: 'none'}}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
+                    <ListItem
+                        button
+                        key={3}
+                        component={Link}
+                        to='/schedule'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
                         <ListItemText>Schedule</ListItemText>
                     </ListItem>
                     <Divider />
@@ -152,34 +199,22 @@ export default function PersistentDrawerLeft(props) {
             </Drawer>
             <main
                 className={clsx(classes.content, {
-                    [classes.contentShift]: open,
+                    [classes.contentShift]: open
                 })}
             >
-                {/* <div className={classes.drawerHeader} />
-                <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-          facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-          gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-          donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-          Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-          imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-          arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-          donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-          facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-          tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-          consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-          vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-          hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-          tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-          nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-          accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography> */}
+                <div className={classes.toolbar} />
+                <TitleContext.Provider value={[setTitle]}>
+                    {children}
+                </TitleContext.Provider>
             </main>
         </div>
     );
 }
+// PersistentDrawerLeft.defaultProps = {
+//     title: 'Better-Banner'
+// };
+
+PersistentDrawerLeft.propTypes = {
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.node]).isRequired
+    // title: PropTypes.string
+};
