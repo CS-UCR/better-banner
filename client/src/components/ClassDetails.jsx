@@ -22,11 +22,11 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
         maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: theme.palette.background.paper
     },
     nested: {
-        paddingLeft: theme.spacing(4),
-    },
+        paddingLeft: theme.spacing(4)
+    }
 }));
 
 export default function NestedList(props) {
@@ -37,17 +37,13 @@ export default function NestedList(props) {
         Prerequisites: false,
         Location: false,
         Instructor: false,
-        ClassSeats: false,
-
+        ClassSeats: false
     });
-    //grabbing Schedule Dialog props
-    const {OpenDialog, CloseDialog, details} = props;
+    // grabbing Schedule Dialog props
+    const { OpenDialog, CloseDialog, details } = props;
 
-    
-
-
-    const handleClick = (key) => {
-        setOpen({ ...open, [key]: !(open[key])});
+    const handleClick = key => {
+        setOpen({ ...open, [key]: !open[key] });
     };
 
     return (
@@ -55,12 +51,12 @@ export default function NestedList(props) {
             <List
                 component='nav'
                 aria-labelledby='nested-list-subheader'
-                subheader={(
+                subheader={
                     <ListSubheader component='div' id='nested-list-subheader'>
                         {/* CS179G */}
                         {details.courseTitle}
                     </ListSubheader>
-                )}
+                }
                 className={classes.root}
             >
                 {/* <ListItem button>
@@ -75,7 +71,7 @@ export default function NestedList(props) {
         </ListItemIcon>
         <ListItemText primary="Drafts" />
       </ListItem> */}
-                <ListItem button onClick={()=>handleClick('Schedule')}>
+                <ListItem button onClick={() => handleClick('Schedule')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -84,7 +80,11 @@ export default function NestedList(props) {
                 </ListItem>
                 <Collapse in={open.Schedule} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        <ListItem button onClick={()=>OpenDialog(<Calendar />)} className={classes.nested}>
+                        <ListItem
+                            button
+                            onClick={() => OpenDialog(<Calendar />)}
+                            className={classes.nested}
+                        >
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>
@@ -94,7 +94,7 @@ export default function NestedList(props) {
                     </List>
                 </Collapse>
 
-                <ListItem button onClick={()=>handleClick('Overview')}>
+                <ListItem button onClick={() => handleClick('Overview')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -103,7 +103,11 @@ export default function NestedList(props) {
                 </ListItem>
                 <Collapse in={open.Overview} timeout='auto' unmountOnExit>
                     <List component='div' disablePadding>
-                        <ListItem button onClick={()=>OpenDialog(<Tree />)} className={classes.nested}>
+                        <ListItem
+                            button
+                            onClick={() => OpenDialog(<Tree />)}
+                            className={classes.nested}
+                        >
                             <ListItemIcon>
                                 <StarBorder />
                             </ListItemIcon>
@@ -112,8 +116,8 @@ export default function NestedList(props) {
                         </ListItem>
                     </List>
                 </Collapse>
-      
-                <ListItem button onClick={()=>handleClick('Prerequisites')}>
+
+                <ListItem button onClick={() => handleClick('Prerequisites')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -131,8 +135,8 @@ export default function NestedList(props) {
                         </ListItem>
                     </List>
                 </Collapse>
-      
-                <ListItem button onClick={()=>handleClick('Location')}>
+
+                <ListItem button onClick={() => handleClick('Location')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -150,8 +154,8 @@ export default function NestedList(props) {
                         </ListItem>
                     </List>
                 </Collapse>
-      
-                <ListItem button onClick={()=>handleClick('Instructor')}>
+
+                <ListItem button onClick={() => handleClick('Instructor')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -170,7 +174,7 @@ export default function NestedList(props) {
                     </List>
                 </Collapse>
 
-                <ListItem button onClick={()=>handleClick('ClassSeats')}>
+                <ListItem button onClick={() => handleClick('ClassSeats')}>
                     <ListItemIcon>
                         <InboxIcon />
                     </ListItemIcon>
@@ -199,7 +203,6 @@ export default function NestedList(props) {
                         </ListItem>
                     </List>
                 </Collapse>
-
             </List>
         </Container>
     );

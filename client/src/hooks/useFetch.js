@@ -13,7 +13,7 @@ export default function useFetch(...args) {
         })
             .then(res => {
                 res.json().then(responseData => {
-                    setData(responseData);
+                    setData(responseData.data);
                     setLoading(false);
                 });
             })
