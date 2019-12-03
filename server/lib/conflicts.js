@@ -1,5 +1,6 @@
 import datefns from 'date-fns';
-
+import read from '../db/reads';
+import db from '../db';
 
 // let schedule = ["Biology", "Chemistry", "Physics", "Algebra", "Biology", "English", "Biology", "Physics"];
 
@@ -130,7 +131,25 @@ export function checkTimeConflict(classes) {}
 // probably going to make db call to the read
 // also since I am making a db call I would need to a 'next import'
 export function checkPreReq(classes) {
+    const studentID = classes.student;
+    const registeredCourses = classes.courses; // this is an array of course IDs they are trying to register for
+    db.reads.getMyCompletedCourses(studentID).then => {
+
+    }
+
+
+    
 
 }
 
+// assume that we are only getting the courses we are registered for
+// return pre req courses for that course
 
+function dbResults(results){
+    for (let i = 0; i < schedule.length; i += 1) {
+        for (let j = i + 1; j < schedule.length; j += 1) {
+            
+        }
+    
+    }
+}
