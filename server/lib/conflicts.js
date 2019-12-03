@@ -127,26 +127,24 @@ function getOverlappingTimes(classesToCheck = []) {
 
 export function checkTimeConflict(classes) {}
 
-
+/*
 // probably going to make db call to the read
 // also since I am making a db call I would need to a 'next import'
 export function checkPreReq(classes) {
     const studentID = classes.student;
     const registeredCourses = classes.courses; // this is an array of course IDs they are trying to register for
-    db.reads.getMyCompletedCourses(studentID).then => {
-
-    }
+    db.reads.getMyCompletedCourses(studentID).then => { }
 
 
     
 
 }
-
+*/
 // assume that we are only getting the courses we are registered for
 // return pre req courses for that course
 
 
-
+/*
 // results[] course IDs they are trying to register too
 function dbResults(registeringTo = []){
     let counter = 0;
@@ -162,6 +160,5 @@ function dbResults(registeringTo = []){
                 j += 1;
             }
         }
-    
     }
-}
+}*/
