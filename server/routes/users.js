@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../db';
+import conflicts from '../lib/conflicts';
 
 const router = express.Router();
 
@@ -41,5 +42,10 @@ router.get('/api/users/:studentId/registration', (req, res) => {
             res.send('error :) -- check server logs');
         });
 });
+
+// router.post('/api/users/:studendID/register', (req, res) => {
+//     conflicts.checkPreReq(req.params)
+
+// });
 
 module.exports = router;

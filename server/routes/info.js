@@ -15,4 +15,5 @@ router.get('/api/info/courses', (req, res) => {
     });
 });
 
+
 module.exports = router;
