@@ -4,10 +4,10 @@ import Audit from '../pages/Audit';
 import Sandbox from '../pages/Sandbox';
 import Table from '../components/Table';
 import Schedule from '../pages/Schedule';
-import RegMainMenu from '../pages/RegMainMenu';
 import Example from '../components/Example';
 import Catalog from '../pages/Catalog';
 import Drawer from '../layout/DrawerAndHeader';
+import CompletedCourses from '../pages/CompletedCourses';
 
 export default function AuditRoutes() {
     return (
@@ -15,8 +15,8 @@ export default function AuditRoutes() {
             <Switch>
                 <Route path='example' component={Example} />
                 <Route path='/schedule' component={Schedule} />
-                <Route path='/regmainmenu' component={RegMainMenu} />
                 <Route path='/audit' component={Audit} />
+                <Route path='/CompletedCourses' component={CompletedCourses} />
                 <Route path='/catalog' component={Catalog} />
                 <Route path='/sandbox' component={Sandbox} />
                 <Route path='/' component={Table} />
