@@ -21,6 +21,14 @@ minDate.setMinutes(0);
 maxDate.setHours(22);
 minDate.setMinutes(0);
 
+let formats = {
+    dayFormat: (date, culture, localizer) => 
+        localizer.format(date, 'ddd', culture),
+
+    
+}
+
+
 function parsingData(classMeeting) {
     const { days, start, end, title } = classMeeting;
     const meetings = [];
@@ -104,6 +112,11 @@ const MyCalendar = props => {
 
     const data = parsingData(genOfferings());
     console.log(data);
+    const data1 = parsingData(genOfferings());
+    console.log(data1);
+    const data2 = parsingData(genOfferings());
+    console.log(data2);
+    
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <Calendar
@@ -112,13 +125,15 @@ const MyCalendar = props => {
                 endAccessor='end'
                 step={15}
                 // style={{ height: '900px', width: '100%' }}
-                defaultView='week'
-                views={['week']}
+                defaultView='work_week'
+                views={['work_week']}
                 // drilldownView={null}
                 toolbar={false}
-                events={data}
+                events={[...data, ...data1, ...data2]}
                 min={minDate}
                 max={maxDate}
+                formats={formats}
+                showMultiDayTimes={true}
                 // { title: 'classname', start: initialStart, end: end, allDay: false },
                 // { start: data.start, end: data.end, allDay: false }
             />
