@@ -2,7 +2,13 @@ import db from './db';
 
 const raw = () => db;
 
-const getOfferings = () => db.select().from('offerings');
+const getOfferings = () =>
+    db
+        .select()
+        .from('offerings')
+        .leftJoin('courses', 'offerings.course_id', 'courses.course_id')
+        .leftJoin('users', 'offerings.instructor', 'users.id')
+        .limit(10);
 
 const getCourses = () => db.select().from('courses');
 
@@ -48,3 +54,4 @@ export default {
     getMyRegistration,
     getMyCompletedCourses
 };
+

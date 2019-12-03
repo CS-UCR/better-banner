@@ -72,6 +72,8 @@ const chooseMeeting = choice => {
 
 const genUser = () => ({
     username: faker.internet.userName(),
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
     email: faker.internet.email(),
     id: faker.random.number()
 });
