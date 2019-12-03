@@ -9,6 +9,7 @@ import UnitSlider from '../components/UnitSlider';
 import FilterOption from '../components/MenuFilter';
 import useTitle from '../hooks/useTitle';
 import useFetch from '../hooks/useFetch';
+import Loader from '../components/Loader';
 
 // used as the index to map each entry
 const courses = [
@@ -126,9 +127,9 @@ export default function Sandbox() {
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
 
-    const [loading, data] = useFetch('/api/info/courses');
+    const [loading, FetchData] = useFetch('/api/info/offerings');
     if (!loading) {
-        console.log(data[0]);
+        console.log(FetchData);
     }
 
     const [unitFilter, setUnitFilter] = React.useState({
@@ -164,12 +165,32 @@ export default function Sandbox() {
     // let query1 = {courseTitle: filter1};
     // let query2 = {Schedule: filter2};
     // let query3 = {courseTitle: unitFilter}
-    let results = courses;
-    results = courses.filter(
-        obj =>
-            parseInt(obj.courseTitle.substring(2), 10) >= unitFilter.min &&
-            parseInt(obj.courseTitle.substring(2), 10) <= unitFilter.max
-    );
+    // let results = courses;
+    function HandleData() {
+        const results = FetchData.map((x, index) => {
+            const obj = {
+                courseTitle: x.title,
+                Schedule: x.days,
+                Overview: 'its a class',
+                Prerequisites: 'CS 100',
+                Location: x.location,
+                Instructor: x.instructor, 
+                Seats_Available: x.capacity,
+                Waitlist: 0,
+            }
+            return obj;
+        });
+        return results;
+}
+
+
+    // results = courses.filter(
+    //     obj =>
+    //         parseInt(obj.courseTitle.substring(2), 10) >= unitFilter.min &&
+    //         parseInt(obj.courseTitle.substring(2), 10) <= unitFilter.max
+    // );
+
+
     // if(filter1 === '' && filter2 !== ''){
     //     results = courses.filter(obj => obj.Schedule.includes(query2.Schedule));
     // }
@@ -178,7 +199,7 @@ export default function Sandbox() {
     // }
 
     // return is like the render() you find in class
-    return (
+    return loading ? <Loader /> : (
         <>
             {/* <Drawer title='Registration Sandbox' /> */}
             <h1>{filter1}</h1>
@@ -208,7 +229,7 @@ export default function Sandbox() {
 
             <FormLabel>Results</FormLabel>
             <Grid container spacing={6}>
-                {results.map((x, index) => (
+                {HandleData().map((x, index) => (
                     <Grid item key={index} className={classes.cardGrid} xs={3}>
                         <ClassDetails
                             details={x}

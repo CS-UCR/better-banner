@@ -10,13 +10,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import Container from '@material-ui/core/Container';
 import Calendar from './Calendar';
 import Tree from './Tree';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import NoteIcon from '@material-ui/icons/Note';
+import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PeopleIcon from '@material-ui/icons/People';
+import SchoolIcon from '@material-ui/icons/School';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -73,9 +78,10 @@ export default function NestedList(props) {
       </ListItem> */}
                 <ListItem button onClick={() => handleClick('Schedule')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <AccessTimeIcon />
+                        
                     </ListItemIcon>
-                    <ListItemText primary='Schedule' />
+                    <ListItemText primary='Class Time' />
                     {open.Schedule ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open.Schedule} timeout='auto' unmountOnExit>
@@ -86,7 +92,7 @@ export default function NestedList(props) {
                             className={classes.nested}
                         >
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Monday, 11:00 - 11:50' /> */}
                             <ListItemText primary={details.Schedule} />
@@ -96,7 +102,7 @@ export default function NestedList(props) {
 
                 <ListItem button onClick={() => handleClick('Overview')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <NoteIcon />
                     </ListItemIcon>
                     <ListItemText primary='Overview' />
                     {open.Overview ? <ExpandLess /> : <ExpandMore />}
@@ -109,7 +115,7 @@ export default function NestedList(props) {
                             className={classes.nested}
                         >
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Senior design class of database' /> */}
                             <ListItemText primary={details.Overview} />
@@ -119,7 +125,7 @@ export default function NestedList(props) {
 
                 <ListItem button onClick={() => handleClick('Prerequisites')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <PriorityHighIcon />
                     </ListItemIcon>
                     <ListItemText primary='Prerequisites' />
                     {open.Prerequisites ? <ExpandLess /> : <ExpandMore />}
@@ -128,7 +134,7 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='CS166 with a grade of C- or better' /> */}
                             <ListItemText primary={details.Prerequisites} />
@@ -138,7 +144,7 @@ export default function NestedList(props) {
 
                 <ListItem button onClick={() => handleClick('Location')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <LocationOnIcon />
                     </ListItemIcon>
                     <ListItemText primary='Location' />
                     {open.Location ? <ExpandLess /> : <ExpandMore />}
@@ -147,7 +153,7 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Chung 138' /> */}
                             <ListItemText primary={details.Location} />
@@ -157,7 +163,7 @@ export default function NestedList(props) {
 
                 <ListItem button onClick={() => handleClick('Instructor')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <SchoolIcon />
                     </ListItemIcon>
                     <ListItemText primary='Instructor' />
                     {open.Instructor ? <ExpandLess /> : <ExpandMore />}
@@ -166,7 +172,7 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Marriam Salloum' /> */}
                             <ListItemText primary={details.Instructor} />
@@ -176,7 +182,7 @@ export default function NestedList(props) {
 
                 <ListItem button onClick={() => handleClick('ClassSeats')}>
                     <ListItemIcon>
-                        <InboxIcon />
+                        <PeopleIcon />
                     </ListItemIcon>
                     <ListItemText primary='ClassSeats' />
                     {open.ClassSeats ? <ExpandLess /> : <ExpandMore />}
@@ -185,7 +191,7 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Seats available: 5' /> */}
                             <ListItemText primary={details.Seats_Available} />
@@ -196,7 +202,7 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemIcon>
-                                <StarBorder />
+                                <RemoveIcon />
                             </ListItemIcon>
                             {/* <ListItemText primary='Waitlist: 0' /> */}
                             <ListItemText primary={details.Waitlist} />
