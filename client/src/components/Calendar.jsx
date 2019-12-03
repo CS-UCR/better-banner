@@ -13,6 +13,14 @@ const daysLeftOfWeek = date1.getDay() % 7;
 // date.setMinutes(integer)
 // date.setDate(date.getDate() - daysLeftofWeek + integer)
 
+const minDate = new Date();
+const maxDate = new Date();
+
+minDate.setHours(6);
+minDate.setMinutes(0);
+maxDate.setHours(22);
+minDate.setMinutes(0);
+
 function parsingData(classMeeting) {
     const { days, start, end, title } = classMeeting;
     const meetings = [];
@@ -109,6 +117,8 @@ const MyCalendar = props => {
                 // drilldownView={null}
                 toolbar={false}
                 events={data}
+                min={minDate}
+                max={maxDate}
                 // { title: 'classname', start: initialStart, end: end, allDay: false },
                 // { start: data.start, end: data.end, allDay: false }
             />
