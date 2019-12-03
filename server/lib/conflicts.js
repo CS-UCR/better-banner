@@ -145,10 +145,22 @@ export function checkPreReq(classes) {
 // assume that we are only getting the courses we are registered for
 // return pre req courses for that course
 
-function dbResults(results){
-    for (let i = 0; i < schedule.length; i += 1) {
-        for (let j = i + 1; j < schedule.length; j += 1) {
-            
+
+
+// results[] course IDs they are trying to register too
+function dbResults(registeringTo = []){
+    let counter = 0;
+    const preReqCompleted = [];
+    const registeredCourses = classes.courses;
+    for (let i = 0; i < registeringTo.length; i += 1) {
+        for (let j = 0; j < registeredCourses.length; ) {
+            if (registeringTo[i].dependencies.pre ===  registeredCourses[j]){
+                preReqCompleted[count] = registeringTo[i];
+                counter += 1;     
+            }
+            else {
+                j += 1;
+            }
         }
     
     }
