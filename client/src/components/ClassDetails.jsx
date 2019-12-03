@@ -81,7 +81,7 @@ export default function NestedList(props) {
                         <AccessTimeIcon />
                         
                     </ListItemIcon>
-                    <ListItemText primary='Schedule' />
+                    <ListItemText primary='Class Time' />
                     {open.Schedule ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open.Schedule} timeout='auto' unmountOnExit>
