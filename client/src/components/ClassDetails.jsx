@@ -4,6 +4,10 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -23,6 +27,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import SchoolIcon from '@material-ui/icons/School';
 import RemoveIcon from '@material-ui/icons/Remove';
 
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: '100%',
@@ -31,8 +36,16 @@ const useStyles = makeStyles(theme => ({
     },
     nested: {
         paddingLeft: theme.spacing(4)
-    }
+    },
+    card: {
+        display: 'block',
+        maxWidth: 100,
+        height: 50
+      }
+  
 }));
+
+
 
 export default function NestedList(props) {
     const classes = useStyles();
@@ -64,18 +77,15 @@ export default function NestedList(props) {
                 }
                 className={classes.root}
             >
-                {/* <ListItem button>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItem> */}
+             {/* <Card className={classes.card}>
+                <CardActionArea>
+                    <CardContent> */}
+                        <Button size="small" color="primary">
+                            Register
+                        </Button>
+                    {/* </CardContent>
+                </CardActionArea>
+            </Card> */}
                 <ListItem button onClick={() => handleClick('Schedule')}>
                     <ListItemIcon>
                         <AccessTimeIcon />

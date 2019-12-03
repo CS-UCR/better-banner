@@ -24,8 +24,6 @@ minDate.setMinutes(0);
 let formats = {
     dayFormat: (date, culture, localizer) => 
         localizer.format(date, 'ddd', culture),
-
-    
 }
 
 
