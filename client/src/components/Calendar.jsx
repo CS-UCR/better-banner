@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -16,16 +17,17 @@ const daysLeftOfWeek = date1.getDay() % 7;
 const minDate = new Date();
 const maxDate = new Date();
 
-minDate.setHours(6);
+// minDate.setHours(6);
+minDate.setHours(0);
 minDate.setMinutes(0);
-maxDate.setHours(22);
+// maxDate.setHours(22);
+maxDate.setHours(15);
 minDate.setMinutes(0);
 
 let formats = {
-    dayFormat: (date, culture, localizer) => 
-        localizer.format(date, 'ddd', culture),
-}
-
+    dayFormat: (date, culture, localizer) =>
+        localizer.format(date, 'dddd', culture)
+};
 
 function parsingData(classMeeting) {
     const { days, start, end, title } = classMeeting;
@@ -107,14 +109,17 @@ const genOfferings = () => {
 
 const MyCalendar = props => {
     // const [loading, data] = useFetch('/api/users/:studentId/registration');
+    const { events } = props;
+    const data = events
+        .map(event => parsingData(event))
+        .reduce((accum, pair) => [...accum, ...pair], []);
+    // const data = parsingData(genOfferings());
+    // console.log(data);
+    // const data1 = parsingData(genOfferings());
+    // console.log(data1);
+    // const data2 = parsingData(genOfferings());
+    // console.log(data2);
 
-    const data = parsingData(genOfferings());
-    console.log(data);
-    const data1 = parsingData(genOfferings());
-    console.log(data1);
-    const data2 = parsingData(genOfferings());
-    console.log(data2);
-    
     return (
         <div style={{ width: '100%', height: '100%' }}>
             <Calendar
@@ -127,16 +132,26 @@ const MyCalendar = props => {
                 views={['work_week']}
                 // drilldownView={null}
                 toolbar={false}
-                events={[...data, ...data1, ...data2]}
+                events={data}
                 min={minDate}
                 max={maxDate}
                 formats={formats}
-                showMultiDayTimes={true}
+                // showMultiDayTimes={true}
                 // { title: 'classname', start: initialStart, end: end, allDay: false },
                 // { start: data.start, end: data.end, allDay: false }
             />
         </div>
     );
+};
+
+MyCalendar.propTypes = {
+    events: PropTypes.arrayOf(
+        PropTypes.shape({
+            start: PropTypes.string.isRequired,
+            end: PropTypes.string.isRequired
+            // days: PropTypes.oneOf(['MWF', 'TR']).isRequired
+        })
+    ).isRequired
 };
 
 export default MyCalendar;

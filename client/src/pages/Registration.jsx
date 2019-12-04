@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, FormLabel } from '@material-ui/core';
+import { Grid, FormLabel, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // import Card from '../components/Card';
 import ClassDetails from '../components/ClassDetails';
@@ -121,16 +121,16 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function Sandbox() {
+export default function Registration() {
     const classes = useStyles();
     useTitle('Registration Sandbox');
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
 
     const [loading, FetchData] = useFetch('/api/info/offerings');
-    if (!loading) {
-        console.log(FetchData);
-    }
+    // if (!loading) {
+    //     console.log(FetchData);
+    // }
 
     const [unitFilter, setUnitFilter] = React.useState({
         min: 0,
@@ -162,6 +162,23 @@ export default function Sandbox() {
         SetData(null);
     }
 
+    const buildClassTime = ({ start, end, days }) => (
+        <div>
+            <Typography>
+                <strong>DAYS:</strong>
+                {days}
+            </Typography>
+            <Typography>
+                <strong>START:</strong>
+                {`${start} AM`}
+            </Typography>
+            <Typography>
+                <strong>END:</strong>
+                {`${end} AM`}
+            </Typography>
+        </div>
+    );
+
     // let query1 = {courseTitle: filter1};
     // let query2 = {Schedule: filter2};
     // let query3 = {courseTitle: unitFilter}
@@ -170,26 +187,24 @@ export default function Sandbox() {
         const results = FetchData.map((x, index) => {
             const obj = {
                 courseTitle: x.title,
-                Schedule: x.days,
+                Schedule: buildClassTime(x),
                 Overview: 'its a class',
                 Prerequisites: 'CS 100',
                 Location: x.location,
-                Instructor: x.instructor, 
+                Instructor: `${x.firstName} ${x.lastName}`,
                 Seats_Available: x.capacity,
-                Waitlist: 0,
-            }
+                Waitlist: 0
+            };
             return obj;
         });
         return results;
-}
-
+    }
 
     // results = courses.filter(
     //     obj =>
     //         parseInt(obj.courseTitle.substring(2), 10) >= unitFilter.min &&
     //         parseInt(obj.courseTitle.substring(2), 10) <= unitFilter.max
     // );
-
 
     // if(filter1 === '' && filter2 !== ''){
     //     results = courses.filter(obj => obj.Schedule.includes(query2.Schedule));
@@ -199,7 +214,9 @@ export default function Sandbox() {
     // }
 
     // return is like the render() you find in class
-    return loading ? <Loader /> : (
+    return loading ? (
+        <Loader />
+    ) : (
         <>
             {/* <Drawer title='Registration Sandbox' /> */}
             <h1>{filter1}</h1>
@@ -235,6 +252,7 @@ export default function Sandbox() {
                             details={x}
                             OpenDialog={handleData}
                             CloseDialog={closeDialog}
+                            raw={FetchData[index]}
                         />
                     </Grid>
                 ))}

@@ -15,5 +15,10 @@ router.get('/api/info/courses', (req, res) => {
     });
 });
 
+router.get('/api/info/students', (req, res) => {
+    db.reads.getStudents().then(studentList => {
+        res.json({ data: studentList });
+    });
+});
 
 module.exports = router;

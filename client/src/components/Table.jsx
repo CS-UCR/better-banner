@@ -21,18 +21,53 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import useFetch from '../hooks/useFetch';
 
-
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-    createData('CS179G', 'Senior Design Database','Monday 11:00 - 11:50', 4,  'Registered'),
-    createData('CS150', 'Theory of Automata', 'Tuesday 11:00 - 11:50', 4, 'Registered'),
-    createData('CS153', 'Operating Systems', 'Friday 2:00 - 8:30', 5, 'Waitlisted'),
-    createData('CS180', 'Software Engineering', 'Wednesday 5:00 - 6:30', 4, 'Registered'),
-    createData('CS135', 'Virtual Reality', 'Friday 9:00 - 10:00', 3, 'Waitlist'),
-    createData('CS170', 'Artifical Intelligence', 'Thursday 9:00 - 10:00', 4, 'Registered'),
+let rows = [
+    createData(
+        'CS179G',
+        'Senior Design Database',
+        'Monday 11:00 - 11:50',
+        4,
+        'Registered'
+    ),
+    createData(
+        'CS150',
+        'Theory of Automata',
+        'Tuesday 11:00 - 11:50',
+        4,
+        'Registered'
+    ),
+    createData(
+        'CS153',
+        'Operating Systems',
+        'Friday 2:00 - 8:30',
+        5,
+        'Waitlisted'
+    ),
+    createData(
+        'CS180',
+        'Software Engineering',
+        'Wednesday 5:00 - 6:30',
+        4,
+        'Registered'
+    ),
+    createData(
+        'CS135',
+        'Virtual Reality',
+        'Friday 9:00 - 10:00',
+        3,
+        'Waitlist'
+    ),
+    createData(
+        'CS170',
+        'Artifical Intelligence',
+        'Thursday 9:00 - 10:00',
+        4,
+        'Registered'
+    )
     // createData('Gingerbread', 356, 16.0, 49, 3.9),
     // createData('Honeycomb', 408, 3.2, 87, 6.5),
     // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
@@ -88,8 +123,6 @@ const headCells = [
     }
 ];
 
-
-
 function EnhancedTableHead(props) {
     const {
         classes,
@@ -104,7 +137,6 @@ function EnhancedTableHead(props) {
         onRequestSort(event, property);
     };
 
-    
     return (
         <TableHead>
             <TableRow>
@@ -164,13 +196,13 @@ const useToolbarStyles = makeStyles(theme => ({
     highlight:
         theme.palette.type === 'light'
             ? {
-                color: theme.palette.secondary.main,
-                backgroundColor: lighten(theme.palette.secondary.light, 0.85)
-            }
+                  color: theme.palette.secondary.main,
+                  backgroundColor: lighten(theme.palette.secondary.light, 0.85)
+              }
             : {
-                color: theme.palette.text.primary,
-                backgroundColor: theme.palette.secondary.dark
-            },
+                  color: theme.palette.text.primary,
+                  backgroundColor: theme.palette.secondary.dark
+              },
     title: {
         flex: '1 1 100%'
     }
@@ -253,7 +285,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable({ events }) {
     const classes = useStyles();
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -261,11 +293,6 @@ export default function EnhancedTable() {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-    const [loading, data] = useFetch('');
-    console.log(data);
-    console.log(loading);
-
 
     const handleRequestSort = (event, property) => {
         const isDesc = orderBy === property && order === 'desc';
@@ -319,8 +346,16 @@ export default function EnhancedTable() {
 
     const emptyRows =
         rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
-    return loading ? <div>loading</div> : (
+    const formatEvents = () =>
+        events.map(({ title, days, start, end, units }) => ({
+            name: title,
+            calories: 'no descr yet',
+            fat: `${days} ${start}-${end}`,
+            carbs: units,
+            protein: 'registered'
+        }));
+    rows = formatEvents();
+    return (
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -341,58 +376,53 @@ export default function EnhancedTable() {
                             rowCount={rows.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getSorting(order, orderBy))
-                                .slice(
-                                    page * rowsPerPage,
-                                    page * rowsPerPage + rowsPerPage
-                                )
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
-                                    const labelId = `enhanced-table-checkbox-${index}`;
+                            {formatEvents().map((row, index) => {
+                                const isItemSelected = isSelected(row.name);
+                                const labelId = `enhanced-table-checkbox-${index}`;
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            onClick={event =>
-                                                handleClick(event, row.name)
-                                            }
-                                            role='checkbox'
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
+                                return (
+                                    <TableRow
+                                        hover
+                                        onClick={event =>
+                                            handleClick(event, row.name)
+                                        }
+                                        role='checkbox'
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.name}
+                                        selected={isItemSelected}
+                                    >
+                                        <TableCell padding='checkbox'>
+                                            <Checkbox
+                                                checked={isItemSelected}
+                                                inputProps={{
+                                                    'aria-labelledby': labelId
+                                                }}
+                                            />
+                                        </TableCell>
+                                        <TableCell
+                                            component='th'
+                                            id={labelId}
+                                            scope='row'
+                                            padding='none'
                                         >
-                                            <TableCell padding='checkbox'>
-                                                <Checkbox
-                                                    checked={isItemSelected}
-                                                    inputProps={{
-                                                        'aria-labelledby': labelId
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell
-                                                component='th'
-                                                id={labelId}
-                                                scope='row'
-                                                padding='none'
-                                            >
-                                                {row.name}
-                                            </TableCell>
-                                            <TableCell align='right'>
-                                                {row.calories}
-                                            </TableCell>
-                                            <TableCell align='right'>
-                                                {row.fat}
-                                            </TableCell>
-                                            <TableCell align='right'>
-                                                {row.carbs}
-                                            </TableCell>
-                                            <TableCell align='right'>
-                                                {row.protein}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
+                                            {row.name}
+                                        </TableCell>
+                                        <TableCell align='right'>
+                                            {row.calories}
+                                        </TableCell>
+                                        <TableCell align='right'>
+                                            {row.fat}
+                                        </TableCell>
+                                        <TableCell align='right'>
+                                            {row.carbs}
+                                        </TableCell>
+                                        <TableCell align='right'>
+                                            {row.protein}
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
                             {emptyRows > 0 && (
                                 <TableRow
                                     style={{
@@ -424,3 +454,7 @@ export default function EnhancedTable() {
         </div>
     );
 }
+
+EnhancedTable.propTypes = {
+    events: PropTypes.array.isRequired
+};

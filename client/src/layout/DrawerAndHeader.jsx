@@ -86,7 +86,7 @@ export default function PersistentDrawerLeft(props) {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const { children } = props;
+    const { children, selectedUser: id } = props;
     const [title, setTitle] = React.useState('Better-Banner');
 
     const handleDrawerOpen = () => {
@@ -145,9 +145,19 @@ export default function PersistentDrawerLeft(props) {
                 <List>
                     <ListItem
                         button
-                        key={0}
                         component={Link}
-                        to='/audit'
+                        to='/'
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <ListItemIcon>
+                            <InboxIcon />
+                        </ListItemIcon>
+                        <ListItemText>Home</ListItemText>
+                    </ListItem>
+                    <ListItem
+                        button
+                        component={Link}
+                        to={`/audit/${id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         <ListItemIcon>
@@ -158,9 +168,8 @@ export default function PersistentDrawerLeft(props) {
                     <Divider />
                     <ListItem
                         button
-                        key={1}
                         component={Link}
-                        to='/sandbox'
+                        to={`/registration/${id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         <ListItemIcon>
@@ -171,9 +180,8 @@ export default function PersistentDrawerLeft(props) {
                     <Divider />
                     <ListItem
                         button
-                        key={2}
                         component={Link}
-                        to='/catalog'
+                        to={`/catalog/${id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         <ListItemIcon>
@@ -184,9 +192,8 @@ export default function PersistentDrawerLeft(props) {
                     <Divider />
                     <ListItem
                         button
-                        key={3}
                         component={Link}
-                        to='/schedule'
+                        to={`/schedule/${id}`}
                         style={{ textDecoration: 'none' }}
                     >
                         <ListItemIcon>
@@ -215,6 +222,7 @@ export default function PersistentDrawerLeft(props) {
 // };
 
 PersistentDrawerLeft.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.node]).isRequired
+    children: PropTypes.oneOfType([PropTypes.array, PropTypes.node]).isRequired,
+    selectedUser: PropTypes.number.isRequired
     // title: PropTypes.string
 };

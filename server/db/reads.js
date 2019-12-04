@@ -2,6 +2,12 @@ import db from './db';
 
 const raw = () => db;
 
+const getStudents = () =>
+    db
+        .select()
+        .from('undergrads')
+        .leftJoin('users', 'undergrads.student_id', 'users.id');
+
 const getOfferings = () =>
     db
         .select()
@@ -52,6 +58,6 @@ export default {
     getCourses,
     // getMyAudit,
     getMyRegistration,
-    getMyCompletedCourses
+    getMyCompletedCourses,
+    getStudents
 };
-

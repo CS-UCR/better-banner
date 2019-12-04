@@ -17,8 +17,6 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Container from '@material-ui/core/Container';
-import Calendar from './Calendar';
-import Tree from './Tree';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import NoteIcon from '@material-ui/icons/Note';
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
@@ -26,7 +24,10 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PeopleIcon from '@material-ui/icons/People';
 import SchoolIcon from '@material-ui/icons/School';
 import RemoveIcon from '@material-ui/icons/Remove';
-
+import { useParams } from 'react-router-dom';
+import Calendar from './Calendar';
+import Tree from './Tree';
+import useSnack from '../hooks/useSnack';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,11 +42,8 @@ const useStyles = makeStyles(theme => ({
         display: 'block',
         maxWidth: 100,
         height: 50
-      }
-  
+    }
 }));
-
-
 
 export default function NestedList(props) {
     const classes = useStyles();
@@ -58,10 +56,41 @@ export default function NestedList(props) {
         ClassSeats: false
     });
     // grabbing Schedule Dialog props
-    const { OpenDialog, CloseDialog, details } = props;
+    const snack = useSnack();
+    const { OpenDialog, CloseDialog, details, raw } = props;
 
     const handleClick = key => {
         setOpen({ ...open, [key]: !open[key] });
+    };
+
+    const { id } = useParams();
+
+    const handleRegister = () => {
+        fetch(`/api/users/${id}/register`, {
+            method: 'POST',
+            body: JSON.stringify({ data: { course: raw, studentId: id } }), // data can be `string` or {object}!
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                res.json().then(({ success, conflictingCourses }) => {
+                    if (success) {
+                        snack(
+                            `Successfully registered for "${raw.title}"`,
+                            'success'
+                        );
+                    } else {
+                        snack(
+                            `${conflictingCourses.length} courses conflict!`,
+                            'error'
+                        );
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
 
     return (
@@ -77,19 +106,18 @@ export default function NestedList(props) {
                 }
                 className={classes.root}
             >
-             {/* <Card className={classes.card}>
+                {/* <Card className={classes.card}>
                 <CardActionArea>
                     <CardContent> */}
-                        <Button size="small" color="primary">
-                            Register
-                        </Button>
-                    {/* </CardContent>
+                <Button size='small' color='primary' onClick={handleRegister}>
+                    Register
+                </Button>
+                {/* </CardContent>
                 </CardActionArea>
             </Card> */}
                 <ListItem button onClick={() => handleClick('Schedule')}>
                     <ListItemIcon>
                         <AccessTimeIcon />
-                        
                     </ListItemIcon>
                     <ListItemText primary='Class Time' />
                     {open.Schedule ? <ExpandLess /> : <ExpandMore />}
@@ -98,7 +126,9 @@ export default function NestedList(props) {
                     <List component='div' disablePadding>
                         <ListItem
                             button
-                            onClick={() => OpenDialog(<Calendar />)}
+                            onClick={() =>
+                                OpenDialog(<Calendar events={[raw]} />)
+                            }
                             className={classes.nested}
                         >
                             <ListItemIcon>
