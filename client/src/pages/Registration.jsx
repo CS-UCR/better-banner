@@ -10,6 +10,7 @@ import FilterOption from '../components/MenuFilter';
 import useTitle from '../hooks/useTitle';
 import useFetch from '../hooks/useFetch';
 import Loader from '../components/Loader';
+import Pagination from '../components/Pagination';
 
 // used as the index to map each entry
 const courses = [
@@ -123,11 +124,26 @@ const useStyles = makeStyles(theme => ({
 
 export default function Registration() {
     const classes = useStyles();
-    useTitle('Registration Sandbox');
+    useTitle('Registration');
+    const perPage = 16;
     const [ScheduleDialog, ToggleDialog] = React.useState(false);
     const [DialogData, SetData] = React.useState(null);
-
-    const [loading, FetchData] = useFetch('/api/info/offerings');
+    const [currentPage, setPage] = React.useState(1);
+    const [loading, setLoading] = React.useState(true);
+    const [FetchData, setData] = React.useState({});
+    const [maxPages, setMaxPages] = React.useState(1);
+    // const [loading, FetchData] = useFetch('/api/info/offerings', { method: 'GET', body: JSON.stringify({ data: { skip: }})});
+    React.useEffect(() => {
+        fetch(`/api/info/offerings/${perPage}/${currentPage}`, {
+            method: 'GET'
+        }).then(res => {
+            res.json().then(({ data }) => {
+                setMaxPages(Math.floor(data.totCount / perPage));
+                setData(data.rows);
+                setLoading(false);
+            });
+        });
+    }, [currentPage]);
     // if (!loading) {
     //     console.log(FetchData);
     // }
@@ -217,7 +233,14 @@ export default function Registration() {
     return loading ? (
         <Loader />
     ) : (
-        <>
+        <Pagination
+            onBack={() => setPage(state => (state > 1 ? state - 1 : state))}
+            onNext={() =>
+                setPage(state => (state < maxPages ? state + 1 : state))
+            }
+            currentPage={currentPage}
+            total={maxPages}
+        >
             {/* <Drawer title='Registration Sandbox' /> */}
             <h1>{filter1}</h1>
             <h1>{filter2}</h1>
@@ -262,6 +285,6 @@ export default function Registration() {
                 close={closeDialog}
                 data={DialogData}
             />
-        </>
+        </Pagination>
     );
 }

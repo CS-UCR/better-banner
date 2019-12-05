@@ -10,15 +10,15 @@ import {
 import { useHistory } from 'react-router-dom';
 import Loader from '../components/Loader';
 import useFetch from '../hooks/useFetch';
-import UserContext from '../layout/UserContext';
+// import UserContext from '../layout/UserContext';
 
 export default function SelectUser() {
     const [loading, data] = useFetch('/api/info/students');
-    const setUser = React.useContext(UserContext);
+    // const setUser = React.useContext(UserContext);
     const history = useHistory();
     const handleClick = studentId => {
-        setUser(studentId);
-        history.push(`/registration/${studentId}`);
+        // setUser(studentId);
+        history.push(`/app/${studentId}/registration`);
     };
 
     return loading ? (
@@ -37,7 +37,7 @@ export default function SelectUser() {
                         >
                             <ListItemText
                                 primary={`${student.firstName} ${student.lastName}`}
-                                secondary={student.student_id}
+                                secondary={`SID: ${student.student_id}`}
                             />
                         </ListItem>
                     ))}

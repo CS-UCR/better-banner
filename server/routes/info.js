@@ -3,9 +3,14 @@ import db from '../db';
 
 const router = express.Router();
 
-router.get('/api/info/offerings', (req, res) => {
-    db.reads.getOfferings().then(offeringData => {
-        res.json({ data: offeringData });
+router.get('/api/info/offerings/:perPage/:currentPage', (req, res) => {
+    const { perPage, currentPage } = req.params;
+    db.reads.getOfferings(perPage, currentPage).then(offeringData => {
+        db.reads.getOfferingsCount(perPage, currentPage).then(([rowCount]) => {
+            res.json({
+                data: { rows: offeringData, totCount: rowCount.count }
+            });
+        });
     });
 });
 

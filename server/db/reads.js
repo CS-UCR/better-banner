@@ -8,13 +8,17 @@ const getStudents = () =>
         .from('undergrads')
         .leftJoin('users', 'undergrads.student_id', 'users.id');
 
-const getOfferings = () =>
+const getOfferings = (perPage, currentPage) =>
     db
         .select()
         .from('offerings')
         .leftJoin('courses', 'offerings.course_id', 'courses.course_id')
         .leftJoin('users', 'offerings.instructor', 'users.id')
-        .limit(10);
+        .offset(currentPage * perPage)
+        .limit(perPage);
+
+const getOfferingsCount = (perPage, currentPage) =>
+    db.select(db.raw('COUNT(*)')).from('offerings');
 
 const getCourses = () => db.select().from('courses');
 
@@ -55,6 +59,7 @@ const getMyCompletedCourses = studentId =>
 export default {
     raw,
     getOfferings,
+    getOfferingsCount,
     getCourses,
     // getMyAudit,
     getMyRegistration,

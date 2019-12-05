@@ -75,6 +75,7 @@ export function courseConflictMsg(schedule = []) {
     const temp = getOverlappingClassesByDay(schedule);
     const conflictingCourses = getConflictedCourses(temp);
     console.log(conflictingCourses);
+    return conflictingCourses;
 }
 
 /*
@@ -163,8 +164,6 @@ export async function checkPreReq(classes) {
 // return pre req courses for that course
 
 export default function conflict(course) {
-    // if (checkTimeConflict([course]) && checkPreReq([course])) {
-
-    // }
+    courseConflictMsg([course]);
     return Promise.resolve({ success: true, conflictingCourses: [] });
 }

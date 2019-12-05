@@ -8,9 +8,7 @@ export default function useFetch(...args) {
     // this hook only runs the first time because of the empty array dependency list
     useEffect(() => {
         // get information on user #1
-        fetch(...args, {
-            method: 'GET'
-        })
+        fetch(...args)
             .then(res => {
                 res.json().then(responseData => {
                     setData(responseData.data);
@@ -19,7 +17,7 @@ export default function useFetch(...args) {
             })
             // eslint-disable-next-line
             .catch(e => console.log(e));
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, []);
 
     return [loading, data];
