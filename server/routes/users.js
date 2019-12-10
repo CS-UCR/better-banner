@@ -1,6 +1,6 @@
 import express from 'express';
 import db from '../db';
-import conflict from '../lib/conflicts';
+import conflict, { courseConflictMsg, classConflict } from '../lib/conflicts';
 
 const router = express.Router();
 
@@ -46,8 +46,14 @@ router.get('/api/users/:studentId/registration', (req, res) => {
 router.post('/api/users/:studentId/register', (req, res) => {
     const { data } = req.body;
     // const { course, studentId } = data;
-    conflict(data).then(conflictData => {
+    /* conflict(data).then(conflictData => {
         res.json(conflictData);
+    }); */
+    classConflict(data).then(conflictSend =>{
+        res.json({data: conflictSend});
+    }).catch(e => {
+        console.long(e);
+        res.send('error :) -- check server logs')
     });
 });
 

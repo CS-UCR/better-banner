@@ -2,28 +2,6 @@ import datefns from 'date-fns';
 import read from '../db/reads';
 import db from '../db';
 
-// let schedule = ["Biology", "Chemistry", "Physics", "Algebra", "Biology", "English", "Biology", "Physics"];
-
-// returns an array with conflicting courses. Ex: ['biology', 'chemistry'] -> biology and chemistry conflict
-function getOverlappingClassesByDay(schedule = []) {
-    const overlappingClasses = [];
-    for (let i = 0; i < schedule.length; i += 1) {
-        if (i < schedule.length - 1) {
-            for (let j = i + 1; j < schedule.length; j += 1) {
-                if (schedule[i].days === schedule[j].days) {
-                    const overlapping = datefns.areOverlapping(
-                        schedule[i],
-                        schedule[j]
-                    );
-                    if (overlapping) {
-                        overlappingClasses.push(schedule[i], schedule[j]);
-                    }
-                }
-            }
-        }
-    }
-    return overlappingClasses;
-}
 
 export function areOverlapping(course1, course2) {
     const { start: start1, end: end1 } = course1;
@@ -52,6 +30,29 @@ export function areOverlapping(course1, course2) {
 
     return false;
 }
+// let schedule = ["Biology", "Chemistry", "Physics", "Algebra", "Biology", "English", "Biology", "Physics"];
+
+// returns an array with conflicting courses. Ex: ['biology', 'chemistry'] -> biology and chemistry conflict
+function getOverlappingClassesByDay(schedule = []) {
+    const overlappingClasses = [];
+    for (let i = 0; i < schedule.length; i += 1) {
+        if (i < schedule.length - 1) {
+            for (let j = i + 1; j < schedule.length; j += 1) {
+                if (schedule[i].days === schedule[j].days) {
+                    const overlapping = areOverlapping(
+                        schedule[i],
+                        schedule[j]
+                    );
+                    if (overlapping) {
+                        overlappingClasses.push(schedule[i], schedule[j]);
+                    }
+                }
+            }
+        }
+    }
+    return overlappingClasses;
+}
+
 
 // returns an object that contain a key thats a courseID and all the courses it conflicts with.
 function getConflictedCourses(schedule = []) {
@@ -77,6 +78,25 @@ export function courseConflictMsg(schedule = []) {
     console.log(conflictingCourses);
     return conflictingCourses;
 }
+
+
+export async function classConflict(data){
+    const schedule = []
+    schedule[0] = data;
+    return db.reads
+        .getMyRegistration(studentID)
+        // .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
+        .then(
+            registeredCourses => {
+                schedule.concat(registeredCourses)
+                return courseConflictMsg(schedule)
+            })
+        .catch(err => console.log(err));
+}
+
+
+
+
 
 /*
 StudentClass {
