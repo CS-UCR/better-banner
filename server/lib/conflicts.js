@@ -75,9 +75,6 @@ function getConflictedCourses(schedule = []) {
 export function courseConflictMsg(schedule = []) {
     const temp = getOverlappingClassesByDay(schedule);
     const conflictingTimes = getConflictedCourses(temp);
-
-    
-
     console.log(conflictingTimes);
     return conflictingTimes;
 }
@@ -87,7 +84,7 @@ export async function classConflict(data){
     const schedule = []
     schedule[0] = data;
     return db.reads
-        .getMyRegistration(studentID)
+        .getMyRegistration(data.studentID)
         // .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
         .then(
             registeredCourses => {
@@ -98,7 +95,9 @@ export async function classConflict(data){
 }
 
 
+/*
 
+*/
 
 
 /*

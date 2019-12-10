@@ -61,14 +61,4 @@ router.post('/api/users/:studentId/register', (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
 module.exports = router;
