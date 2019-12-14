@@ -47,11 +47,11 @@ router.post('/api/users/:studentId/register', (req, res) => {
     const { data } = req.body;
     console.log(data);
     classConflict(data).then(conflictSend =>{
-        conflictSend.then(flag =>{
-            res.json({data: flag});
-        })
+        // conflictSend.then(flag =>{
+        res.json({data: conflictSend});
+        // })
     }).catch(e => {
-        console.long(e);
+        console.log(e);
         res.send('error :) -- check server logs')
     });
 });

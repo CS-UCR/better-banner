@@ -1,6 +1,7 @@
 import datefns from 'date-fns';
 import read from '../db/reads';
 import db from '../db';
+import { date } from 'date-fns/locale';
 
 
 export function areOverlapping(course1, course2) {
@@ -180,12 +181,16 @@ function dbResults(completedCourses = [], registeringTo = []) {
 // also since I am making a db call I would need to a 'next import'
 export async function checkPreReq(classes) {
     // let conflictingCourses = [];
-    const studentID = classes.student;
+    const studentID = classes.studentId;
     // const registeredCourses = classes.courses; // this is an array of course IDs they are trying to register for
-    const registeredCourses = [];
-    for ( let i = 0; i < classes.courses.length; i += 1){
-        registeredCourses[i] = classes.courses[i].course_id;
-    } 
+    // const registeredCourses = [];
+    // for ( let i = 0; i < classes.courses.length; i += 1){
+    //     registeredCourses[i] = classes.courses[i].course_id;
+    // } 
+
+    const registeredCourses = db.reads.getMyCompletedCourses(studentID)
+
+
     return db.reads
         .getMyCompletedCourses(studentID)
         .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
@@ -204,13 +209,22 @@ export async function checkPreReq(classes) {
 export async function courseConflictMsg(schedule = []) {
     let flag = false;
     const temp = getOverlappingClassesByDay(schedule);
-    const conflictingTimes = getConflictedCourses(temp);
 
+    if(temp.length === 0){
+        return checkPreReq(schedule[0]).then(conflicts =>{
+            if (conflicts < 1){
+                flag = true;
+            }
+            return flag;
+        });
+    }
+    
+    const conflictingTimes = getConflictedCourses(temp);
     if (conflictingTimes.course_id.length < 1){
         flag = true;
     }
 
-    return checkPreReq(schedule[0].course_id).then(conflicts =>{
+    return checkPreReq(schedule[0]).then(conflicts =>{
         if (conflicts < 1){
             flag = true;
         }
