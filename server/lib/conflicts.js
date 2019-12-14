@@ -211,8 +211,8 @@ export async function courseConflictMsg(schedule = []) {
     const isConflicting = !Object.values(conflictingTimes).every(
         value => value.length < 1
     );
-    if (!isConflicting) {
-        flag = true;
+    if (isConflicting) {
+        return Promise.resolve(false);
     }
 
     if (temp.length === 0) {
@@ -225,7 +225,7 @@ export async function courseConflictMsg(schedule = []) {
     }
 
     return checkPreReq(schedule[0]).then(conflicts => {
-        if (conflicts < 1 && flag !== false) {
+        if (conflicts < 1) {
             flag = true;
         }
         return flag;
