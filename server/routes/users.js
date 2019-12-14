@@ -43,33 +43,29 @@ router.get('/api/users/:studentId/registration', (req, res) => {
         });
 });
 
+router.post('/api/users/:studentId/register', (req, res) => {
+    const { data } = req.body;
+    console.log(data);
+    classConflict(data).then(conflictSend =>{
+        conflictSend.then(flag =>{
+            res.json({data: flag});
+        })
+    }).catch(e => {
+        console.long(e);
+        res.send('error :) -- check server logs')
+    });
+});
+
+
 // router.post('/api/users/:studentId/register', (req, res) => {
 //     const { data } = req.body;
 //     // const { course, studentId } = data;
-//     /* conflict(data).then(conflictData => {
+//     conflict(data).then(conflictData => {
 //         res.json(conflictData);
-//     }); */
-//     console.log(data);
-//     classConflict(data).then(conflictSend =>{
-//         conflictSend.then(flag =>{
-//             res.json({data: flag});
-//         })
 //     }).catch(e => {
-//         console.long(e);
-//         res.send('error :) -- check server logs')
+//         console.log(e);
+//         res.send('error :) -- check server logs');
 //     });
 // });
-
-
-router.post('/api/users/:studentId/register', (req, res) => {
-    const { data } = req.body;
-    // const { course, studentId } = data;
-    conflict(data).then(conflictData => {
-        res.json(conflictData);
-    }).catch(e => {
-        console.log(e);
-        res.send('error :) -- check server logs');
-    });
-});
 
 module.exports = router;

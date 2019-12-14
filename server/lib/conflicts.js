@@ -222,7 +222,7 @@ export async function classConflict(data){
     const schedule = []
     schedule[0] = data;
     return db.reads
-        .getMyRegistration(data.studentID)
+        .getMyRegistration(data.studentId)
         // .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
         .then(
             registeredCourses => {
@@ -232,7 +232,7 @@ export async function classConflict(data){
         .catch(err => console.log(err));
 }
 
-export default function conflict(course) {
-    courseConflictMsg([course]);
-    return Promise.resolve({ success: true, conflictingCourses: [] });
-}
+// export default function conflict(course) {
+//     courseConflictMsg([course]);
+//     return Promise.resolve({ success: true, conflictingCourses: [] });
+// }
