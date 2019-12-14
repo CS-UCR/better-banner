@@ -64,7 +64,11 @@ function getConflictedCourses(schedule = []) {
                 j % 2 === 0
             ) {
                 if (course[schedule[i].course_id]) {
-                    course[schedule[i].course_id].push(schedule[j]);
+                    const temp = course[schedule[i].course_id];
+                    course[schedule[i].course_id] = [
+                        ...temp,
+                        schedule[j].course_id
+                    ];
                 } else {
                     course[schedule[i].course_id] = [schedule[j].course_id];
                 }
@@ -73,87 +77,6 @@ function getConflictedCourses(schedule = []) {
     }
     return course;
 }
-
-// // prints the object that contains all the conflicting courses
-// export function courseConflictMsg(schedule = []) {
-//     let flag = false;
-//     const temp = getOverlappingClassesByDay(schedule);
-//     const conflictingTimes = getConflictedCourses(temp);
-
-//     if (conflictingTimes.course_id.length < 1){
-//         flag = true;
-//     }
-
-//     if (checkPreReq(schedule[0])){
-//         flag = true;
-//     }
-
-//     console.log(conflictingTimes);
-//     return flag;
-// }
-
-// export async function classConflict(data){
-//     const schedule = []
-//     schedule[0] = data;
-//     return db.reads
-//         .getMyRegistration(data.studentID)
-//         // .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
-//         .then(
-//             registeredCourses => {
-//                 schedule.concat(registeredCourses)
-//                 return courseConflictMsg(schedule)
-//             })
-//         .catch(err => console.log(err));
-// }
-
-/*
-StudentClass {
-    Title: "Biology 101"
-    course_id: 12345
-    days: ['Monday', 'Wednesday', 'Thursday']
-    days: 'MWR'
-
-}
-*/
-
-/**
- * @description helper function for determining all overlapping classes
- * @arg classesToCheck - array of all the classes to check
- * assume each one has start & end property -- i.e. start & end key
- 
-function getOverlappingTimes(classesToCheck = []) {
-    const overlappingClasses = [];
-    for (let i = 0; i < classesToCheck.length; i += 1) {
-        if (i < classesToCheck.length - 1) {
-            for (let j = i + 1; j < classesToCheck.length; j += 1) {
-                if (i !== j) {
-                    const overlapping = datefns.areIntervalsOverlapping(
-                        classesToCheck[i],
-                        classesToCheck[j]
-                    );
-                    if (overlapping) {
-                        overlappingClasses.push(
-                            classesToCheck[i],
-                            classesToCheck[j]
-                        );
-                    }
-                }
-            }
-        }
-    }
-    return overlappingClasses;
-}
-*/
-
-/**
- *
- * @param {*} classes - this will be an array with the properties classes.days and classes.times.
- * possible values for day: 'MWF' or 'TTH'
- * possible values for times: date obj
- * possibly use date-fns
- */
-
-export function checkTimeConflict(classes) {}
 
 // results[] course IDs they are trying to register too
 function dbResults(completedCourses = [], registeringTo = []) {
@@ -178,35 +101,26 @@ function dbResults(completedCourses = [], registeringTo = []) {
 
 // probably going to make db call to the read
 // also since I am making a db call I would need to a 'next import'
-export async function checkPreReq(classes) {
+export async function checkPreReq(schedule = [], studentId) {
     // let conflictingCourses = [];
-    const studentID = classes.studentId;
     // const registeredCourses = classes.courses; // this is an array of course IDs they are trying to register for
     // const registeredCourses = [];
     // for ( let i = 0; i < classes.courses.length; i += 1){
     //     registeredCourses[i] = classes.courses[i].course_id;
     // }
 
-    const registeredCourses = db.reads.getMyCompletedCourses(studentID);
-
+    // const registeredCourses = db.reads.getMyCompletedCourses(studentId);
     return db.reads
-        .getMyCompletedCourses(studentID)
-        .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
+        .getMyCompletedCourses(studentId)
+        .then(dbResultsArray => dbResults(dbResultsArray, schedule))
         .catch(err => console.log(err));
 }
 
-// assume that we are only getting the courses we are registered for
-// return pre req courses for that course
-
-// export default function conflict(course) {
-//     courseConflictMsg([course]);
-//     return Promise.resolve({ success: true, conflictingCourses: [] });
-// }
-
 // prints the object that contains all the conflicting courses
-export async function courseConflictMsg(schedule = []) {
-    let flag = false;
+export async function courseConflictMsg(schedule = [], studentId) {
+    // let flag = false;
     const temp = getOverlappingClassesByDay(schedule);
+
     const conflictingTimes = getConflictedCourses(temp);
     const isConflicting = !Object.values(conflictingTimes).every(
         value => value.length < 1
@@ -214,34 +128,26 @@ export async function courseConflictMsg(schedule = []) {
     if (isConflicting) {
         return Promise.resolve(false);
     }
+    return true;
 
-    if (temp.length === 0) {
-        return checkPreReq(schedule[0]).then(conflicts => {
-            if (conflicts < 1) {
-                flag = true;
-            }
-            return flag;
-        });
-    }
-
-    return checkPreReq(schedule[0]).then(conflicts => {
-        if (conflicts < 1) {
-            flag = true;
-        }
-        return flag;
-    });
+    // return checkPreReq(schedule, studentId).then(conflicts => {
+    //     if (conflicts.length >= 1) {
+    //         return false;
+    //     }
+    //     return true;
+    // });
 }
 
 export async function classConflict(data) {
     const schedule = [];
-    schedule[0] = data;
+    schedule[0] = data.course;
     return (
         db.reads
             .getMyRegistration(data.studentId)
             // .then(dbResultsArray => dbResults(dbResultsArray, registeredCourses))
             .then(registeredCourses => {
                 const combined = schedule.concat(registeredCourses);
-                return courseConflictMsg(combined);
+                return courseConflictMsg(combined, data.studentId);
             })
             .catch(err => console.log(err))
     );
