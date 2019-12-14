@@ -24,9 +24,3 @@ $ yarn install
 $ yarn initdb
 $ yarn start
 ```
-## MAYBE DELETE?
-Finally cd back to the root directory and we know can run the program with the following command:
-
-yarn start
-
-If everything works correctly, you should have a new browser opening that will redirect you to the registration page.
