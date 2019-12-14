@@ -74,15 +74,16 @@ export default function NestedList(props) {
             }
         })
             .then(res => {
-                res.json().then(({ success, conflictingCourses }) => {
+                res.json().then(({ data }) => {
+                    const { success } = data;
                     if (success) {
                         snack(
-                            `Successfully registered for "${raw.title}"`,
+                            'Successfully registered',
                             'success'
                         );
                     } else {
                         snack(
-                            `${conflictingCourses.length} courses conflict!`,
+                            'Course(s) conflict!',
                             'error'
                         );
                     }

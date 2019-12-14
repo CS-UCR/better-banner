@@ -45,17 +45,29 @@ router.get('/api/users/:studentId/registration', (req, res) => {
 
 router.post('/api/users/:studentId/register', (req, res) => {
     const { data } = req.body;
-    console.log(data);
-    classConflict(data).then(conflictSend =>{
-        // conflictSend.then(flag =>{
-        res.json({data: conflictSend});
-        // })
-    }).catch(e => {
-        console.log(e);
-        res.send('error :) -- check server logs')
-    });
+    // console.log(data);
+    classConflict(data)
+        .then(conflictSend => {
+            if (conflictSend) {
+                db.writes
+                    .writeRegistration(
+                        [parseInt(data.course.course_id, 10)],
+                        parseInt(data.studentId, 10)
+                    )
+                    .then(() => {
+                        res.json({ data: { success: conflictSend } });
+                    });
+            } else {
+                res.json({ data: { success: conflictSend } });
+            }
+            // conflictSend.then(flag =>{
+            // })
+        })
+        .catch(e => {
+            console.log(e);
+            res.send('error :) -- check server logs');
+        });
 });
-
 
 // router.post('/api/users/:studentId/register', (req, res) => {
 //     const { data } = req.body;
