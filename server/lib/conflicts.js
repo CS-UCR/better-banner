@@ -207,6 +207,13 @@ export async function checkPreReq(classes) {
 export async function courseConflictMsg(schedule = []) {
     let flag = false;
     const temp = getOverlappingClassesByDay(schedule);
+    const conflictingTimes = getConflictedCourses(temp);
+    const isConflicting = !Object.values(conflictingTimes).every(
+        value => value.length < 1
+    );
+    if (!isConflicting) {
+        flag = true;
+    }
 
     if (temp.length === 0) {
         return checkPreReq(schedule[0]).then(conflicts => {
@@ -215,14 +222,6 @@ export async function courseConflictMsg(schedule = []) {
             }
             return flag;
         });
-    }
-
-    const conflictingTimes = getConflictedCourses(temp);
-    const isConflicting = !Object.values(conflictingTimes).every(
-        value => value.length < 1
-    );
-    if (!isConflicting) {
-        flag = true;
     }
 
     return checkPreReq(schedule[0]).then(conflicts => {
